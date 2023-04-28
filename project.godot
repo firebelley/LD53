@@ -10,18 +10,13 @@ config_version=5
 
 [application]
 
-config/name="Game"
+config/name="LD53"
 run/main_scene="res://scenes/Main.tscn"
 config/use_custom_user_dir=true
-config/custom_user_dir_name="Game"
-config/features=PackedStringArray("4.0", "C#")
+config/custom_user_dir_name="LD53"
+config/features=PackedStringArray("4.0")
+run/max_fps=240
 config/icon="res://icon.png"
-
-[autoload]
-
-ScreenTransition="*res://addons/node_library/scenes/ScreenTransition.tscn"
-MusicPlayer="*res://scenes/autoload/MusicPlayer.tscn"
-Visuals="*res://scenes/autoload/Visuals.tscn"
 
 [debug]
 
@@ -36,11 +31,11 @@ window/size/window_height_override=1080
 
 [dotnet]
 
-project/assembly_name="Game"
+project/assembly_name="LD53"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/center_pivot_offset/plugin.cfg", "res://addons/node_library/plugin.cfg")
+enabled=PackedStringArray("res://addons/center_pivot_offset/plugin.cfg", "res://addons/node_library/plugin.cfg", "res://addons/palette_importer/plugin.cfg")
 
 [filesystem]
 
@@ -79,7 +74,7 @@ texture={
 
 [mono]
 
-project/assembly_name="Game"
+project/assembly_name="LD53"
 
 [rendering]
 
