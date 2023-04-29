@@ -111,6 +111,7 @@ punch_alternate={
 [layer_names]
 
 2d_physics/layer_1="Terrain"
+2d_physics/layer_2="PlayerHitbox"
 2d_physics/layer_5="EnemyHurtbox"
 2d_physics/layer_6="EnemyHurtboxAlternate"
 2d_physics/layer_7="EnemyPickup"

@@ -1,0 +1,21 @@
+[gd_scene load_steps=5 format=3 uid="uid://c0slylsf6jlls"]
+
+[ext_resource type="Texture2D" uid="uid://cck7oqusohxmb" path="res://assets/demon/projectile.png" id="1_dfxoq"]
+[ext_resource type="Script" path="res://scenes/projectile/projectile.gd" id="1_u8a1q"]
+[ext_resource type="PackedScene" uid="uid://bd0qyw8fumqhp" path="res://scenes/component/knockback_area_component.tscn" id="2_cwy2s"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_363ox"]
+radius = 3.0
+
+[node name="Projectile" type="Node2D"]
+script = ExtResource("1_u8a1q")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_dfxoq")
+centered = false
+offset = Vector2(-8, -8)
+
+[node name="KnockbackAreaComponent" parent="." instance=ExtResource("2_cwy2s")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="KnockbackAreaComponent"]
+shape = SubResource("CircleShape2D_363ox")

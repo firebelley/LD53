@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://bbp1bki3tgpvf"]
+[gd_scene load_steps=8 format=3 uid="uid://bbp1bki3tgpvf"]
 
 [ext_resource type="Texture2D" uid="uid://18ecu50a1ykm" path="res://assets/demon/demon.png" id="1_kyl47"]
 [ext_resource type="Script" path="res://scenes/demon/demon.gd" id="1_ujgr6"]
 [ext_resource type="PackedScene" uid="uid://cvgc3ypo1apv" path="res://scenes/effect/punch_particles.tscn" id="2_7i6r4"]
+[ext_resource type="PackedScene" uid="uid://c0slylsf6jlls" path="res://scenes/projectile/projectile.tscn" id="2_qg8t3"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1ixtc"]
 size = Vector2(18, 20)
@@ -18,10 +19,15 @@ collision_layer = 16
 script = ExtResource("1_ujgr6")
 
 [node name="ResourcePreloader" type="ResourcePreloader" parent="."]
-resources = [PackedStringArray("punch_particles"), [ExtResource("2_7i6r4")]]
+resources = [PackedStringArray("projectile", "punch_particles"), [ExtResource("2_qg8t3"), ExtResource("2_7i6r4")]]
 
 [node name="StateTimer" type="Timer" parent="."]
 one_shot = true
+
+[node name="ProjectileTimer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+autostart = true
 
 [node name="Visuals" type="Node2D" parent="."]
 
@@ -74,3 +80,6 @@ target_position = Vector2(0, 10)
 [node name="RayCast2D2" type="RayCast2D" parent="Raycasts"]
 position = Vector2(5, -2)
 target_position = Vector2(0, 10)
+
+[node name="ProjectileMarker" type="Marker2D" parent="."]
+position = Vector2(0, -11)

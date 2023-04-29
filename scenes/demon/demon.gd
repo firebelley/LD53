@@ -11,6 +11,9 @@ const WALK_SPEED = 50
 @onready var center_marker = %CenterMarker
 @onready var raycasts = $Raycasts
 @onready var state_timer = $StateTimer
+@onready var projectile_timer = $ProjectileTimer
+@onready var projectile_marker = $ProjectileMarker
+@onready var projectile_scene = resource_preloader.get_resource("projectile") as PackedScene
 
 var state: Callable = Callable(state_normal)
 
@@ -49,6 +52,10 @@ func state_normal():
 	
 	if !is_on_floor():
 		state_machine.change_state(state_airborne)
+		
+	if projectile_timer.is_stopped():
+		projectile_timer.start()
+		try_spawn_projectile()
 
 
 func state_punched():
@@ -103,6 +110,16 @@ func is_over_edge():
 		if !r.is_colliding():
 			return true
 	return false
+
+
+func try_spawn_projectile():
+	if randf() > .25:
+		return
+
+	var projectile = projectile_scene.instantiate() as Node2D
+	add_sibling(projectile)
+	projectile.global_position = projectile_marker.global_position
+	projectile.start(Vector2.RIGHT)
 
 
 func on_uppercut_area_entered(_other_area: Area2D):

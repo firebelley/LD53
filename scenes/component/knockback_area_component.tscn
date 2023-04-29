@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://bd0qyw8fumqhp"]
+
+[ext_resource type="Script" path="res://scenes/component/knockback_area_component.gd" id="1_iroak"]
+
+[node name="KnockbackAreaComponent" type="Area2D"]
+collision_layer = 2
+collision_mask = 0
+script = ExtResource("1_iroak")

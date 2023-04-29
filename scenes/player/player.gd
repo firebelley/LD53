@@ -16,6 +16,7 @@ const JUMP_TERMINATION_MOD = 4.0
 @onready var pickup_area: Area2D = $PickupArea
 @onready var resource_preloader = $ResourcePreloader
 @onready var fist_scene = resource_preloader.get_resource("fist") as PackedScene
+@onready var hurtbox_area = $HurtboxArea
 
 var held_enemy: Node2D
 
@@ -25,11 +26,13 @@ var fist_instance: Node2D = null
 
 func _ready():
 	state_machine.add_states(state_normal)
-	state_machine.add_states(state_airborne, Callable(), leave_state_airborne)
+	state_machine.add_states(state_airborne, enter_state_airborne, leave_state_airborne)
+	state_machine.add_states(state_knockback)
 	state_machine.set_initial_state(state_normal)
 	
 	uppercut_shape.disabled = true
 	punch_shape.disabled = true
+	hurtbox_area.area_entered.connect(on_hurtbox_area_entered)
 
 
 func _process(_delta):
@@ -61,6 +64,10 @@ func state_normal():
 
 	if (!is_on_floor()):
 		state_machine.change_state(state_airborne)
+
+
+func enter_state_airborne():
+	animation_player.play("jump")
 
 
 func state_airborne():
@@ -114,6 +121,14 @@ func leave_state_airborne():
 		fist_instance.cleanup()
 
 
+func state_knockback():
+	velocity.y += GRAVITY * get_process_delta_time()
+	move_and_slide()
+	
+	if is_on_floor():
+		state_machine.change_state(state_normal)
+
+
 func get_movement_vector():
 	var x = Input.get_action_strength("move_right") - Input.get_action_strength("move_left")
 	var y = -1 if Input.is_action_just_pressed("jump") && is_on_floor() else 0
@@ -135,3 +150,14 @@ func activate_uppercut():
 
 func on_punch_timer_timeout():
 	punch_shape.disabled = true
+
+
+func on_hurtbox_area_entered(other_area: Area2D):
+	if other_area is KnockbackAreaComponent:
+		var area = other_area as KnockbackAreaComponent
+		
+		var xsign = sign(global_position.x - other_area.global_position.x)
+		var direction = Vector2.UP.rotated(deg_to_rad(25 * xsign))
+		velocity = direction * area.knockback_force
+		print(area.knockback_force)
+		state_machine.change_state(state_knockback)
