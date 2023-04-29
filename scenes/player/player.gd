@@ -8,6 +8,7 @@ const JUMP_UP_GRAVITY_MOD = .5
 const JUMP_TERMINATION_MOD = 4.0
 
 @onready var visuals: Node2D = $Visuals
+@onready var animation_player: AnimationPlayer = $AnimationPlayer
 
 func _ready():
 	pass
@@ -31,8 +32,14 @@ func _process(delta):
 	
 	move_and_slide()
 	
+	if (movement_vector.x == 0):
+		animation_player.play("RESET")
+	else:
+		animation_player.play("run")
+	
 	visuals.global_position = global_position.round()
 	update_facing()
+
 
 func get_movement_vector():
 	var x = Input.get_action_strength("move_right") - Input.get_action_strength("move_left")
@@ -42,4 +49,6 @@ func get_movement_vector():
 
 
 func update_facing():
+	if get_movement_vector().x == 0:
+		return
 	visuals.scale = Vector2(-1, 1) if get_movement_vector().x < 0 else Vector2.ONE
