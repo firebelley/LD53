@@ -18,6 +18,10 @@ config/features=PackedStringArray("4.0")
 run/max_fps=240
 config/icon="res://icon.png"
 
+[autoload]
+
+HitstopManager="*res://scenes/autoload/hitstop_manager.tscn"
+
 [debug]
 
 gdscript/warnings/return_value_discarded=false
@@ -104,6 +108,7 @@ punch={
 2d_physics/layer_1="Terrain"
 2d_physics/layer_5="EnemyHurtbox"
 2d_physics/layer_6="EnemyHurtboxAlternate"
+2d_physics/layer_7="EnemyPickup"
 
 [mono]
 

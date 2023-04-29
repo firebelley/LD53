@@ -1,19 +1,30 @@
-[gd_scene load_steps=5 format=3 uid="uid://bbp1bki3tgpvf"]
+[gd_scene load_steps=7 format=3 uid="uid://bbp1bki3tgpvf"]
 
 [ext_resource type="Texture2D" uid="uid://18ecu50a1ykm" path="res://assets/demon/demon.png" id="1_kyl47"]
 [ext_resource type="Script" path="res://scenes/demon/demon.gd" id="1_ujgr6"]
+[ext_resource type="PackedScene" uid="uid://cvgc3ypo1apv" path="res://scenes/effect/punch_particles.tscn" id="2_7i6r4"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1ixtc"]
 size = Vector2(18, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_c35si"]
+size = Vector2(18, 8)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dt62w"]
 size = Vector2(10, 16)
 
 [node name="Demon" type="CharacterBody2D"]
-collision_layer = 0
+collision_layer = 16
 script = ExtResource("1_ujgr6")
 
+[node name="ResourcePreloader" type="ResourcePreloader" parent="."]
+resources = [PackedStringArray("punch_particles"), [ExtResource("2_7i6r4")]]
+
 [node name="Visuals" type="Node2D" parent="."]
+
+[node name="CenterMarker" type="Marker2D" parent="Visuals"]
+unique_name_in_owner = true
+position = Vector2(0, -8)
 
 [node name="Sprite2D" type="Sprite2D" parent="Visuals"]
 position = Vector2(0, -3)
@@ -29,6 +40,14 @@ collision_mask = 16
 [node name="CollisionShape2D" type="CollisionShape2D" parent="UpperCutArea"]
 position = Vector2(0, -10)
 shape = SubResource("RectangleShape2D_1ixtc")
+
+[node name="PickupArea" type="Area2D" parent="."]
+collision_layer = 64
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PickupArea"]
+position = Vector2(0, -4)
+shape = SubResource("RectangleShape2D_c35si")
 
 [node name="PunchArea" type="Area2D" parent="."]
 visible = false

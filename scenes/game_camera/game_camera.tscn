@@ -11,7 +11,9 @@ fractal_octaves = 1
 [node name="GameCamera" type="Node2D"]
 script = ExtResource("1_vrcmf")
 
-[node name="ShakyCamera2D" type="Camera2D" parent="."]
+[node name="ShakyCamera2D" type="Camera2D" parent="." groups=["shaky_camera"]]
 position_smoothing_speed = 50.0
 script = ExtResource("1_ayk0y")
 shake_noise = SubResource("FastNoiseLite_eax48")
+max_shake_offset = 17.0
+frequency_multiplier = 50.0

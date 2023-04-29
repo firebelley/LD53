@@ -6,18 +6,14 @@ const GRAVITY = 400
 @onready var punch_area: Area2D = $PunchArea
 @onready var visuals: Node2D = $Visuals
 @onready var sprite: Sprite2D = $Visuals/Sprite2D
-
-enum State {
-	Normal,
-	Airborne
-}
+@onready var resource_preloader: ResourcePreloader = $ResourcePreloader
+@onready var center_marker = %CenterMarker
 
 var state: Callable = Callable(state_normal)
 
 func _ready():
 	uppercut_area.area_entered.connect(on_uppercut_area_entered)
 	punch_area.area_entered.connect(on_punch_area_entered)
-
 
 func _process(_delta):
 	state.call()
@@ -76,6 +72,12 @@ func change_state(new_state: Callable, enter_state: Callable = Callable()):
 
 func on_uppercut_area_entered(_other_area: Area2D):
 	velocity.y = -200
+	HitstopManager.hitstop()
+	HitstopManager.shake_camera()
+	var particles = resource_preloader.get_resource("punch_particles").instantiate() as Node2D
+	add_sibling(particles)
+	particles.global_position = center_marker.global_position
+	particles.rotation = deg_to_rad(-90)
 
 
 func on_punch_area_entered(other_area: Area2D):
@@ -84,3 +86,11 @@ func on_punch_area_entered(other_area: Area2D):
 	
 	velocity = direction * 300
 	change_state(state_punched)
+	HitstopManager.hitstop()
+	HitstopManager.shake_camera()
+	
+	var particles = resource_preloader.get_resource("punch_particles").instantiate() as Node2D
+	add_sibling(particles)
+	particles.global_position = center_marker.global_position
+	particles.rotation = direction.angle()
+	

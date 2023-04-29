@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://dg7m2ur78tcya"]
+[gd_scene load_steps=13 format=3 uid="uid://dg7m2ur78tcya"]
 
 [ext_resource type="Script" path="res://scenes/player/player.gd" id="1_c660e"]
 [ext_resource type="Texture2D" uid="uid://bbkesrsy4cfec" path="res://assets/player/head.png" id="3_d8y0q"]
@@ -316,6 +316,9 @@ size = Vector2(6, 12)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wkan3"]
 size = Vector2(32, 16)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6aaol"]
+size = Vector2(18, 16)
+
 [node name="Player" type="CharacterBody2D"]
 collision_layer = 0
 script = ExtResource("1_c660e")
@@ -365,7 +368,6 @@ centered = false
 offset = Vector2(-4, -3)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
 position = Vector2(0, -6)
 shape = SubResource("RectangleShape2D_y34wq")
 
@@ -378,6 +380,16 @@ collision_mask = 0
 [node name="CollisionShape2D" type="CollisionShape2D" parent="UpperCutArea"]
 position = Vector2(0, -1)
 shape = SubResource("RectangleShape2D_wkan3")
+
+[node name="PickupArea" type="Area2D" parent="."]
+visible = false
+position = Vector2(0, -7)
+collision_layer = 0
+collision_mask = 64
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PickupArea"]
+position = Vector2(0, 1)
+shape = SubResource("RectangleShape2D_6aaol")
 
 [node name="PunchArea" type="Area2D" parent="."]
 visible = false

@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-const MAX_SPEED = 110
+const MAX_SPEED = 120
 const ACCEL_SMOOTH = -30.0
 const GRAVITY = 1200
 const JUMP_FORCE = 300
@@ -12,12 +12,15 @@ const JUMP_TERMINATION_MOD = 4.0
 @onready var uppercut_shape: CollisionShape2D = $UpperCutArea/CollisionShape2D
 @onready var punch_shape: CollisionShape2D = $PunchArea/CollisionShape2D
 @onready var punch_area: Area2D = $PunchArea
+@onready var pickup_area: Area2D = $PickupArea
 
 
 enum State {
 	Normal,
 	Airborne
 }
+
+var held_enemy: Node2D
 
 var state: Callable = Callable(state_normal)
 
@@ -48,10 +51,10 @@ func state_normal():
 	
 	visuals.global_position = global_position.round()
 	update_facing()
-	
+
 	if (!is_on_floor()):
 		change_state(state_airborne)
-	
+
 
 func state_airborne():
 	var delta = get_process_delta_time()

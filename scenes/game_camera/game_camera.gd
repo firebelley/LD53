@@ -15,8 +15,5 @@ func _process(delta):
 	if player != null:
 		target_position = player.global_position;
 	
-#	shaky_camera.
 	global_position = global_position.lerp(target_position, 1.0 - exp(-16 * delta))
-#	shaky_camera.global_position = global_position.round()
-#	global_position = global_position.round()
 	shaky_camera.global_position = global_position.round()

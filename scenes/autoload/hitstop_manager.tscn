@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://ce1f4w5526tb7"]
+
+[ext_resource type="Script" path="res://scenes/autoload/hitstop_manager.gd" id="1_e7rb2"]
+
+[node name="HitstopManager" type="Node"]
+process_mode = 3
+script = ExtResource("1_e7rb2")
