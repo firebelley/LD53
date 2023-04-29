@@ -71,7 +71,10 @@ func state_airborne():
 	
 	update_facing()
 
-	if Input.is_action_just_pressed("punch"):
+	if Input.is_action_pressed("punch"):
+		Engine.time_scale = .25
+	if Input.is_action_just_released("punch"):
+		Engine.time_scale = 1.0
 		punch_shape.disabled = false
 		punch_area.rotation = (get_global_mouse_position() - punch_area.global_position).angle()
 		var timer = get_tree().create_timer(.1)

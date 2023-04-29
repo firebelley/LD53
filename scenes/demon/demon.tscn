@@ -13,10 +13,13 @@ size = Vector2(10, 16)
 collision_layer = 0
 script = ExtResource("1_ujgr6")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Visuals" type="Node2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="Visuals"]
+position = Vector2(0, -3)
 texture = ExtResource("1_kyl47")
 centered = false
-offset = Vector2(-16, -27)
+offset = Vector2(-16, -24)
 
 [node name="UpperCutArea" type="Area2D" parent="."]
 visible = false

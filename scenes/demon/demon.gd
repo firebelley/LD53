@@ -1,7 +1,11 @@
 extends CharacterBody2D
 
+const GRAVITY = 400
+
 @onready var uppercut_area: Area2D = $UpperCutArea
 @onready var punch_area: Area2D = $PunchArea
+@onready var visuals: Node2D = $Visuals
+@onready var sprite: Sprite2D = $Visuals/Sprite2D
 
 enum State {
 	Normal,
@@ -21,7 +25,6 @@ func _process(_delta):
 
 func state_normal():
 	var delta = get_process_delta_time()
-	velocity.y += 400 * delta
 	velocity.x = lerp(velocity.x, 0.0, 1.0 - exp(-20 * delta))
 	move_and_slide()
 	
@@ -29,13 +32,38 @@ func state_normal():
 		change_state(state_airborne)
 	
 
+func state_punched():
+	var delta = get_process_delta_time()	
+	velocity.y += GRAVITY * delta
+	move_and_slide()
+		
+	visuals.rotation = lerp_angle(visuals.rotation, velocity.angle() + deg_to_rad(90), 1 - exp(-10 * delta))
+	
+	if is_on_floor():
+		change_state(state_knockout, leave_state_airborne)
+
+
 func state_airborne():
 	var delta = get_process_delta_time()	
-	velocity.y += 400 * delta
+	velocity.y += GRAVITY * delta
 	move_and_slide()
 	
 	if is_on_floor():
 		change_state(state_normal)
+
+
+func leave_state_airborne():
+	visuals.rotation = 0
+
+
+func state_knockout():
+	sprite.rotation = rad_to_deg(90)
+	var delta = get_process_delta_time()
+	velocity.x = lerp(velocity.x, 0.0, 1.0 - exp(-20 * delta))
+	move_and_slide()
+	
+	if !is_on_floor():
+		change_state(state_airborne)
 
 
 func change_state(new_state: Callable, enter_state: Callable = Callable()):
@@ -55,3 +83,4 @@ func on_punch_area_entered(other_area: Area2D):
 	var direction = Vector2.RIGHT.rotated(rotation)
 	
 	velocity = direction * 300
+	change_state(state_punched)
