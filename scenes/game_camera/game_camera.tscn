@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://bs4hqc4o6qyxt"]
+
+[ext_resource type="Script" path="res://addons/node_library/scripts/shaky_camera_2d.gd" id="1_ayk0y"]
+[ext_resource type="Script" path="res://scenes/game_camera/game_camera.gd" id="1_vrcmf"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_eax48"]
+noise_type = 3
+seed = 1403072713
+fractal_octaves = 1
+
+[node name="GameCamera" type="Node2D"]
+script = ExtResource("1_vrcmf")
+
+[node name="ShakyCamera2D" type="Camera2D" parent="."]
+position_smoothing_speed = 50.0
+script = ExtResource("1_ayk0y")
+shake_noise = SubResource("FastNoiseLite_eax48")
