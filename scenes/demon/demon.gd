@@ -115,11 +115,16 @@ func is_over_edge():
 func try_spawn_projectile():
 	if randf() > .25:
 		return
-
+	
+	var player = get_tree().get_first_node_in_group("player")
+	var direction = Vector2.RIGHT
+	if player != null:
+		direction = Vector2.RIGHT if player.global_position.x > global_position.x else Vector2.LEFT
+	
 	var projectile = projectile_scene.instantiate() as Node2D
 	add_sibling(projectile)
 	projectile.global_position = projectile_marker.global_position
-	projectile.start(Vector2.RIGHT)
+	projectile.start(direction)
 
 
 func on_uppercut_area_entered(_other_area: Area2D):
