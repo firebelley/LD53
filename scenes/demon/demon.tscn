@@ -20,6 +20,9 @@ script = ExtResource("1_ujgr6")
 [node name="ResourcePreloader" type="ResourcePreloader" parent="."]
 resources = [PackedStringArray("punch_particles"), [ExtResource("2_7i6r4")]]
 
+[node name="StateTimer" type="Timer" parent="."]
+one_shot = true
+
 [node name="Visuals" type="Node2D" parent="."]
 
 [node name="CenterMarker" type="Marker2D" parent="Visuals"]

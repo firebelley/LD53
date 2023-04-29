@@ -10,6 +10,7 @@ const WALK_SPEED = 50
 @onready var resource_preloader: ResourcePreloader = $ResourcePreloader
 @onready var center_marker = %CenterMarker
 @onready var raycasts = $Raycasts
+@onready var state_timer = $StateTimer
 
 var state: Callable = Callable(state_normal)
 
@@ -17,10 +18,10 @@ var state_machine: CallableStateMachine = CallableStateMachine.new()
 
 
 func _ready():
-	state_machine.add_states(state_normal, enter_state_normal, leave_state_normal)
-	state_machine.add_states(state_airborne, Callable(), leave_state_airborne)
-	state_machine.add_states(state_punched)
-	state_machine.add_states(state_knockout)
+	state_machine.add_states(state_normal)
+	state_machine.add_states(state_airborne)
+	state_machine.add_states(state_punched, Callable(), leave_state_punched)
+	state_machine.add_states(state_knockout, enter_state_knockout, leave_state_knockout)
 	state_machine.set_initial_state(state_normal)
 	
 	uppercut_area.area_entered.connect(on_uppercut_area_entered)
@@ -29,10 +30,6 @@ func _ready():
 
 func _process(_delta):
 	state_machine.update()
-
-
-func enter_state_normal():
-	visible = false
 
 
 func state_normal():
@@ -52,11 +49,7 @@ func state_normal():
 	
 	if !is_on_floor():
 		state_machine.change_state(state_airborne)
-	
 
-func leave_state_normal():
-	visible = true
-	
 
 func state_punched():
 	var delta = get_process_delta_time()	
@@ -78,19 +71,30 @@ func state_airborne():
 		state_machine.change_state(state_normal)
 
 
-func leave_state_airborne():
+func leave_state_punched():
 	visuals.rotation = 0
 
 
-func state_knockout():
+func enter_state_knockout():
 	sprite.rotation = rad_to_deg(90)
+	state_timer.wait_time = 5
+	state_timer.start()
+
+
+func state_knockout():
 	var delta = get_process_delta_time()
 	velocity.x = lerp(velocity.x, 0.0, 1.0 - exp(-20 * delta))
 	move_and_slide()
 	
 	if !is_on_floor():
 		state_machine.change_state(state_punched)
-
+	if state_timer.is_stopped():
+		state_machine.change_state(state_normal)
+	
+	
+func leave_state_knockout():
+	sprite.rotation = 0
+	
 
 func is_over_edge():
 	for raycast in raycasts.get_children():
@@ -102,7 +106,7 @@ func is_over_edge():
 
 
 func on_uppercut_area_entered(_other_area: Area2D):
-	velocity.y = -200
+	velocity.y = randf_range(-350, -300)
 	HitstopManager.hitstop()
 	HitstopManager.shake_camera()
 	var particles = resource_preloader.get_resource("punch_particles").instantiate() as Node2D

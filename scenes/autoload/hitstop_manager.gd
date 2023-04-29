@@ -3,7 +3,7 @@ extends Node
 
 func hitstop():
 	get_tree().paused = true
-	await get_tree().create_timer(.05, true, false, true).timeout
+	await get_tree().create_timer(.06, true, false, true).timeout
 	get_tree().paused = false
 
 

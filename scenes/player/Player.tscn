@@ -1,6 +1,7 @@
-[gd_scene load_steps=13 format=3 uid="uid://dg7m2ur78tcya"]
+[gd_scene load_steps=14 format=3 uid="uid://dg7m2ur78tcya"]
 
 [ext_resource type="Script" path="res://scenes/player/player.gd" id="1_c660e"]
+[ext_resource type="PackedScene" uid="uid://bubbwkd2okp1y" path="res://scenes/fist/fist.tscn" id="2_xsxkl"]
 [ext_resource type="Texture2D" uid="uid://bbkesrsy4cfec" path="res://assets/player/head.png" id="3_d8y0q"]
 [ext_resource type="Texture2D" uid="uid://n8gq41j5ujev" path="res://assets/player/body.png" id="4_24dnu"]
 [ext_resource type="Texture2D" uid="uid://dwqdy3tqnxsdx" path="res://assets/player/arm_left.png" id="4_wxqe2"]
@@ -314,7 +315,7 @@ _data = {
 size = Vector2(6, 12)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wkan3"]
-size = Vector2(32, 16)
+size = Vector2(48, 16)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6aaol"]
 size = Vector2(18, 16)
@@ -322,6 +323,9 @@ size = Vector2(18, 16)
 [node name="Player" type="CharacterBody2D"]
 collision_layer = 0
 script = ExtResource("1_c660e")
+
+[node name="ResourcePreloader" type="ResourcePreloader" parent="."]
+resources = [PackedStringArray("fist"), [ExtResource("2_xsxkl")]]
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 autoplay = "run"
@@ -392,11 +396,10 @@ position = Vector2(0, 1)
 shape = SubResource("RectangleShape2D_6aaol")
 
 [node name="PunchArea" type="Area2D" parent="."]
-visible = false
 position = Vector2(0, -7)
 collision_layer = 32
 collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PunchArea"]
-position = Vector2(12, -1)
+position = Vector2(5, -1)
 shape = SubResource("RectangleShape2D_wkan3")

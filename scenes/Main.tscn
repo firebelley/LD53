@@ -34,11 +34,13 @@ position = Vector2(208, 174)
 position = Vector2(253, 176)
 
 [node name="Spawner" parent="." instance=ExtResource("7_snuft")]
+visible = false
 position = Vector2(72, 176)
 extents = Vector2(112, 1)
 scene = ExtResource("5_6qmi8")
 
 [node name="Spawner2" parent="." instance=ExtResource("7_snuft")]
+visible = false
 position = Vector2(392, 176)
 extents = Vector2(112, 1)
 scene = ExtResource("5_6qmi8")
