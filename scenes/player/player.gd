@@ -9,7 +9,9 @@ const JUMP_TERMINATION_MOD = 4.0
 
 @onready var visuals: Node2D = $Visuals
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
-@onready var uppercut_area: Area2D = $UpperCutArea
+@onready var uppercut_shape: CollisionShape2D = $UpperCutArea/CollisionShape2D
+@onready var punch_shape: CollisionShape2D = $PunchArea/CollisionShape2D
+@onready var punch_area: Area2D = $PunchArea
 
 
 enum State {
@@ -20,8 +22,8 @@ enum State {
 var state: Callable = Callable(state_normal)
 
 func _ready():
-	uppercut_area.monitoring = false
-	uppercut_area.area_entered.connect(on_uppercut_area_entered)
+	uppercut_shape.disabled = true
+	punch_shape.disabled = true
 
 
 func _process(_delta):
@@ -69,6 +71,12 @@ func state_airborne():
 	
 	update_facing()
 
+	if Input.is_action_just_pressed("punch"):
+		punch_shape.disabled = false
+		punch_area.rotation = (get_global_mouse_position() - punch_area.global_position).angle()
+		var timer = get_tree().create_timer(.1)
+		timer.timeout.connect(on_punch_timer_timeout)
+
 	if is_on_floor():
 		change_state(state_normal)
 
@@ -95,10 +103,10 @@ func update_facing():
 
 
 func activate_uppercut():
-	uppercut_area.monitoring = true
+	uppercut_shape.disabled = false
 	await get_tree().create_timer(.1).timeout
-	uppercut_area.monitoring = false
+	uppercut_shape.disabled = true
 	
-	
-func on_uppercut_area_entered(_other_area: Area2D):
-	print("yep")
+
+func on_punch_timer_timeout():
+	punch_shape.disabled = true

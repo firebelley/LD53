@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://bbp1bki3tgpvf"]
+[gd_scene load_steps=5 format=3 uid="uid://bbp1bki3tgpvf"]
 
 [ext_resource type="Texture2D" uid="uid://18ecu50a1ykm" path="res://assets/demon/demon.png" id="1_kyl47"]
 [ext_resource type="Script" path="res://scenes/demon/demon.gd" id="1_ujgr6"]
@@ -6,7 +6,11 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1ixtc"]
 size = Vector2(18, 20)
 
-[node name="Demon" type="Node2D"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dt62w"]
+size = Vector2(10, 16)
+
+[node name="Demon" type="CharacterBody2D"]
+collision_layer = 0
 script = ExtResource("1_ujgr6")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
@@ -14,10 +18,24 @@ texture = ExtResource("1_kyl47")
 centered = false
 offset = Vector2(-16, -27)
 
-[node name="Area2D" type="Area2D" parent="."]
-collision_layer = 16
-collision_mask = 0
+[node name="UpperCutArea" type="Area2D" parent="."]
+visible = false
+collision_layer = 0
+collision_mask = 16
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="UpperCutArea"]
 position = Vector2(0, -10)
 shape = SubResource("RectangleShape2D_1ixtc")
+
+[node name="PunchArea" type="Area2D" parent="."]
+visible = false
+collision_layer = 0
+collision_mask = 32
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PunchArea"]
+position = Vector2(0, -10)
+shape = SubResource("RectangleShape2D_1ixtc")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -8)
+shape = SubResource("RectangleShape2D_dt62w")
