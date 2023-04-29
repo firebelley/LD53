@@ -2,4 +2,4 @@ extends Node
 
 
 func _ready():
-	print("hi!")
+	RenderingServer.set_default_clear_color(Color("0a010d"))
