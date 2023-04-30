@@ -1,0 +1,273 @@
+[gd_scene load_steps=16 format=3 uid="uid://di3pyqp2856w4"]
+
+[ext_resource type="Script" path="res://scenes/piggy/piggy_attack.gd" id="1_1oxqt"]
+[ext_resource type="Shader" path="res://scenes/piggy/piggy.gdshader" id="1_l1kvq"]
+[ext_resource type="Texture2D" uid="uid://by7vm6n5x1s2m" path="res://assets/piggy/laser.png" id="2_2m6v1"]
+[ext_resource type="PackedScene" uid="uid://bd0qyw8fumqhp" path="res://scenes/component/knockback_area_component.tscn" id="4_5hacm"]
+[ext_resource type="Material" uid="uid://c5v22sx37ex03" path="res://resources/animated_particles_canvas_material.tres" id="5_x3h7o"]
+[ext_resource type="Texture2D" uid="uid://ctu4h86cwjcg6" path="res://assets/effect/particles.png" id="6_qrh6l"]
+
+[sub_resource type="Animation" id="Animation_6745i"]
+resource_name = "default"
+length = 1.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Line2D:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 1), Vector2(1.3, 1), Vector2(0.9, 1), Vector2(1, 1), Vector2(0.9, 1), Vector2(1, 1), Vector2(0.9, 1), Vector2(1, 1), Vector2(0.9, 1), Vector2(1, 1), Vector2(0.9, 1), Vector2(1, 1)]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(1.1),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"kill"
+}]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("KnockbackAreaComponent/CollisionShape2D:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.2, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, false, true]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("EndParticles:emitting")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("StartParticles:emitting")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_cxv8o"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Line2D:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("KnockbackAreaComponent/CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("EndParticles:emitting")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("StartParticles:emitting")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_yus7h"]
+resource_name = "kill"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("KnockbackAreaComponent/CollisionShape2D:disabled")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Line2D:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(0, 1)]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.5),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"queue_free"
+}]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("StartParticles:emitting")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("EndParticles:emitting")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_mct6i"]
+_data = {
+"RESET": SubResource("Animation_cxv8o"),
+"default": SubResource("Animation_6745i"),
+"kill": SubResource("Animation_yus7h")
+}
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_w1vuy"]
+shader = ExtResource("1_l1kvq")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dpk4h"]
+size = Vector2(8, 1000)
+
+[sub_resource type="Curve" id="Curve_x3r22"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.113065, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_2wvsf"]
+curve = SubResource("Curve_x3r22")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_p70ua"]
+emission_shape = 1
+emission_sphere_radius = 6.0
+particle_flag_disable_z = true
+direction = Vector3(0, 1, 0)
+gravity = Vector3(0, -10, 0)
+initial_velocity_max = 100.0
+angular_velocity_min = -360.0
+angular_velocity_max = 360.0
+orbit_velocity_min = 0.0
+orbit_velocity_max = 0.0
+scale_max = 2.0
+scale_curve = SubResource("CurveTexture_2wvsf")
+color = Color(1, 0.976471, 0.701961, 1)
+
+[node name="PiggyAttack" type="Node2D"]
+script = ExtResource("1_1oxqt")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "default"
+libraries = {
+"": SubResource("AnimationLibrary_mct6i")
+}
+
+[node name="Line2D" type="Line2D" parent="."]
+texture_repeat = 2
+material = SubResource("ShaderMaterial_w1vuy")
+points = PackedVector2Array(0, 0, 0, 100)
+width = 16.0
+texture = ExtResource("2_2m6v1")
+texture_mode = 1
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+target_position = Vector2(0, 1000)
+
+[node name="KnockbackAreaComponent" parent="." instance=ExtResource("4_5hacm")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="KnockbackAreaComponent"]
+position = Vector2(0, 500)
+shape = SubResource("RectangleShape2D_dpk4h")
+
+[node name="StartParticles" type="GPUParticles2D" parent="."]
+material = ExtResource("5_x3h7o")
+emitting = false
+amount = 20
+process_material = SubResource("ParticleProcessMaterial_p70ua")
+texture = ExtResource("6_qrh6l")
+lifetime = 0.2
+fixed_fps = 0
+interpolate = false
+
+[node name="EndParticles" type="GPUParticles2D" parent="."]
+material = ExtResource("5_x3h7o")
+position = Vector2(0, 52)
+emitting = false
+amount = 20
+process_material = SubResource("ParticleProcessMaterial_p70ua")
+texture = ExtResource("6_qrh6l")
+lifetime = 0.2
+fixed_fps = 0
+interpolate = false

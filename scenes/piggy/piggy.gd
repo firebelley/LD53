@@ -14,11 +14,15 @@ const WALK_SPEED = 50
 @onready var projectile_marker = $ProjectileMarker
 @onready var knockout_hitbox_shape = $KnockoutHitboxArea/CollisionShape2D
 @onready var knockout_hurtbox_area = $KnockoutHurtboxArea
-@onready var projectile_scene = resource_preloader.get_resource("projectile") as PackedScene
 @onready var animation_player = $AnimationPlayer
+@onready var attack_root = $AttackRoot
+@onready var attack_scene = resource_preloader.get_resource("piggy_attack") as PackedScene
+
 
 var state_machine: CallableStateMachine = CallableStateMachine.new()
 var adjusted_walk_speed = WALK_SPEED * randf_range(.9, 1.1)
+var attack_instance: Node2D = null
+var attack_direction: Vector2
 
 
 func _ready():
@@ -27,6 +31,7 @@ func _ready():
 	state_machine.add_states(state_airborne, enter_state_airborne)
 	state_machine.add_states(state_punched, enter_state_punched, leave_state_punched)
 	state_machine.add_states(state_knockout, enter_state_knockout, leave_state_knockout)
+	state_machine.add_states(state_attack, enter_state_attack, leave_state_attack)
 	state_machine.set_initial_state(state_normal)
 	
 	knockout_hitbox_shape.disabled = true
@@ -43,6 +48,8 @@ func _process(_delta):
 func enter_state_normal():
 	animation_player.play("RESET")
 	animation_player.queue("run")
+	state_timer.wait_time = randf_range(2, 3)
+	state_timer.start()
 
 
 func state_normal():
@@ -58,19 +65,11 @@ func state_normal():
 	velocity = velocity.lerp(target_direction * adjusted_walk_speed, 1.0 - exp(-5 * delta))
 	
 	move_and_slide()
-	
-#	if is_on_floor() && is_over_edge():
-#		velocity.y -= 200
-#		velocity.x *= 3.0
-#
-#	if !is_on_floor():
-#		state_machine.change_state(state_airborne)
-#
-#	if projectile_timer.is_stopped():
-#		projectile_timer.start()
-#		try_spawn_projectile()
-	
+
 	update_facing()
+	
+	if state_timer.is_stopped():
+		state_machine.change_state(state_attack)
 
 
 func enter_state_punched():
@@ -136,6 +135,28 @@ func leave_state_knockout():
 	visuals.rotation = 0
 	visuals.position = Vector2.ZERO
 	
+	
+func enter_state_attack():
+	attack_instance = attack_scene.instantiate() as Node2D
+	$AttackRoot.add_child(attack_instance)
+	
+	attack_direction = Vector2.RIGHT
+	var player = get_tree().get_first_node_in_group("player")
+	if player != null:
+		attack_direction = Vector2.LEFT if player.global_position.x < global_position.x else Vector2.RIGHT
+	
+
+func state_attack():
+	velocity = velocity.lerp(attack_direction * adjusted_walk_speed * 1.5, 1.0 - exp(-20 * get_process_delta_time()))
+	move_and_slide()
+	if !is_instance_valid(attack_instance):
+		state_machine.change_state(state_normal)
+	
+	
+func leave_state_attack():
+	if is_instance_valid(attack_instance):
+		attack_instance.kill()
+
 
 func is_over_edge():
 	for raycast in raycasts.get_children():
@@ -144,21 +165,6 @@ func is_over_edge():
 		if !r.is_colliding():
 			return true
 	return false
-
-
-func try_spawn_projectile():
-	if randf() > .25:
-		return
-	
-	var player = get_tree().get_first_node_in_group("player")
-	var direction = Vector2.RIGHT
-	if player != null:
-		direction = Vector2.RIGHT if player.global_position.x > global_position.x else Vector2.LEFT
-	
-	var projectile = projectile_scene.instantiate() as Node2D
-	add_sibling(projectile)
-	projectile.global_position = projectile_marker.global_position
-	projectile.start(direction)
 
 
 func update_facing():
