@@ -195,6 +195,7 @@ func on_hurtbox_area_entered(other_area: Area2D):
 		state_machine.change_state(state_knockback)
 		if area.owner.has_method("kill"):
 			area.owner.kill()
+		HitstopManager.shake_camera()
 
 
 func on_pit_area_entered(_other_area: Area2D):

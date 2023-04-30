@@ -15,3 +15,4 @@ func on_body_entered(body: PhysicsBody2D):
 	particles.global_position = body.global_position
 	GameEvents.emit_enemy_banished(body, 1)
 	body.queue_free()
+	HitstopManager.shake_camera()

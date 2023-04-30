@@ -32,7 +32,7 @@ func setup_spawners():
 	
 
 func update_difficulty():
-	if (current_ticks % 15) == 0:
+	if (current_ticks % 30) == 0:
 		max_enemies += 1
 	
 	if current_ticks == 30:
