@@ -1,8 +1,50 @@
-[gd_scene load_steps=8 format=3 uid="uid://dm8wtwhqb7xc8"]
+[gd_scene load_steps=11 format=3 uid="uid://dm8wtwhqb7xc8"]
 
 [ext_resource type="Texture2D" uid="uid://cv3tl657fvhim" path="res://assets/spikes/spikes.png" id="1_cvnh3"]
 [ext_resource type="Texture2D" uid="uid://bvelu3aees5h7" path="res://assets/spikes/indicator.png" id="2_dau0q"]
 [ext_resource type="PackedScene" uid="uid://bd0qyw8fumqhp" path="res://scenes/component/knockback_area_component.tscn" id="3_3x57p"]
+[ext_resource type="Script" path="res://addons/node_library/scripts/random_audio_stream_player_2d.gd" id="4_ha1eb"]
+[ext_resource type="AudioStream" uid="uid://b71b1rqccm3gn" path="res://assets/audio/spikes_warning.wav" id="5_35lsp"]
+[ext_resource type="AudioStream" uid="uid://dul4n2bjjbk85" path="res://assets/audio/spikes.wav" id="6_g5krf"]
+
+[sub_resource type="Animation" id="Animation_afoar"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Indicator:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("KnockbackAreaComponent/CollisionShape2D:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
 
 [sub_resource type="Animation" id="Animation_ua7nf"]
 resource_name = "default"
@@ -58,44 +100,33 @@ tracks/3/keys = {
 "update": 1,
 "values": [false, true]
 }
-
-[sub_resource type="Animation" id="Animation_afoar"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Indicator:scale")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
+tracks/4/type = "method"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("RandomAudioStreamPlayer2D")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(1, 1)]
+"values": [{
+"args": [],
+"method": &"play_random"
+}]
 }
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Sprite2D:scale")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
+tracks/5/type = "method"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("SpikesStreamPlayer")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0.9),
 "transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(1, 1)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("KnockbackAreaComponent/CollisionShape2D:disabled")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
+"values": [{
+"args": [],
+"method": &"play_random"
+}]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_u30hd"]
@@ -132,3 +163,19 @@ position = Vector2(0, -3)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="KnockbackAreaComponent"]
 shape = SubResource("RectangleShape2D_cqifv")
 disabled = true
+
+[node name="RandomAudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+volume_db = -10.0
+max_distance = 400.0
+bus = &"sfx"
+script = ExtResource("4_ha1eb")
+streams = Array[AudioStream]([ExtResource("5_35lsp")])
+randomize_pitch = true
+
+[node name="SpikesStreamPlayer" type="AudioStreamPlayer2D" parent="."]
+volume_db = -4.0
+max_distance = 400.0
+bus = &"sfx"
+script = ExtResource("4_ha1eb")
+streams = Array[AudioStream]([ExtResource("6_g5krf")])
+randomize_pitch = true

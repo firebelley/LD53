@@ -18,6 +18,7 @@ const JUMP_TERMINATION_MOD = 4.0
 @onready var fist_scene = resource_preloader.get_resource("fist") as PackedScene
 @onready var hurtbox_area = $HurtboxArea
 @onready var pit_area = $PitArea
+@onready var jump_stream_player = $JumpStreamPlayer
 
 var held_enemy: Node2D
 var current_hp = 3
@@ -55,6 +56,7 @@ func state_normal():
 			activate_uppercut()
 		else:
 			velocity.y -= JUMP_FORCE
+		jump_stream_player.play_random()
 	
 	move_and_slide()
 	

@@ -1,7 +1,25 @@
-[gd_scene load_steps=11 format=3 uid="uid://b6yfvfmwx01js"]
+[gd_scene load_steps=14 format=3 uid="uid://b6yfvfmwx01js"]
 
 [ext_resource type="Material" uid="uid://c5v22sx37ex03" path="res://resources/animated_particles_canvas_material.tres" id="1_3peky"]
 [ext_resource type="Texture2D" uid="uid://ctu4h86cwjcg6" path="res://assets/effect/particles.png" id="2_em5mm"]
+[ext_resource type="Script" path="res://addons/node_library/scripts/random_audio_stream_player_2d.gd" id="3_bspsj"]
+[ext_resource type="AudioStream" uid="uid://dp41cn5re0vwi" path="res://assets/audio/engulf2.wav" id="4_ipjfh"]
+[ext_resource type="AudioStream" uid="uid://dbowp4haygssr" path="res://assets/audio/engulf.wav" id="5_8j851"]
+
+[sub_resource type="Animation" id="Animation_mbifh"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("GPUParticles2D:emitting")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
 
 [sub_resource type="Animation" id="Animation_u21i1"]
 resource_name = "default"
@@ -32,20 +50,19 @@ tracks/1/keys = {
 "method": &"queue_free"
 }]
 }
-
-[sub_resource type="Animation" id="Animation_mbifh"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("GPUParticles2D:emitting")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("RandomAudioStreamPlayer2D")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
+"values": [{
+"args": [],
+"method": &"play_random"
+}]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_0x4ui"]
@@ -108,3 +125,11 @@ lifetime = 0.4
 explosiveness = 0.1
 fixed_fps = 0
 interpolate = false
+
+[node name="RandomAudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+volume_db = 5.0
+max_distance = 400.0
+bus = &"sfx"
+script = ExtResource("3_bspsj")
+streams = Array[AudioStream]([ExtResource("4_ipjfh"), ExtResource("5_8j851")])
+randomize_pitch = true

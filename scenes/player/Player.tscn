@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://dg7m2ur78tcya"]
+[gd_scene load_steps=19 format=3 uid="uid://dg7m2ur78tcya"]
 
 [ext_resource type="Script" path="res://scenes/player/player.gd" id="1_c660e"]
 [ext_resource type="PackedScene" uid="uid://bubbwkd2okp1y" path="res://scenes/fist/fist.tscn" id="2_xsxkl"]
@@ -7,6 +7,8 @@
 [ext_resource type="Texture2D" uid="uid://dwqdy3tqnxsdx" path="res://assets/player/arm_left.png" id="4_wxqe2"]
 [ext_resource type="Texture2D" uid="uid://x04ev0xadqm0" path="res://assets/player/leg_right.png" id="5_uds3u"]
 [ext_resource type="Texture2D" uid="uid://bgnhjj5u3cgok" path="res://assets/player/leg_left.png" id="6_g48a0"]
+[ext_resource type="Script" path="res://addons/node_library/scripts/random_audio_stream_player.gd" id="8_vp7nq"]
+[ext_resource type="AudioStream" uid="uid://cs4bfkhtgo601" path="res://assets/audio/jump3.wav" id="9_oiulu"]
 
 [sub_resource type="Animation" id="Animation_crryq"]
 length = 0.001
@@ -503,3 +505,10 @@ collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PitArea"]
 shape = SubResource("RectangleShape2D_dkbbm")
+
+[node name="JumpStreamPlayer" type="AudioStreamPlayer" parent="."]
+volume_db = -12.0
+bus = &"sfx"
+script = ExtResource("8_vp7nq")
+streams = Array[AudioStream]([ExtResource("9_oiulu")])
+randomize_pitch = true
