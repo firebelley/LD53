@@ -12,7 +12,7 @@ var current_ticks = 0
 var required_player_xp = 5
 var required_xp_growth = 5
 var current_player_xp = 0
-var current_player_level = 1
+var current_player_level = 0
 var spawners = []
 
 var max_enemies = 3
@@ -28,15 +28,17 @@ func _ready():
 	
 
 func setup_spawners():
-	spawners = get_tree().get_nodes_in_group("spawner")
+	spawners = get_tree().get_nodes_in_group("spawner").filter(func(x): return !x.is_in_group("spawner_secondary"))
 	
 
 func update_difficulty():
-	if (current_ticks % 30) == 0:
-		max_enemies += 1
+	max_enemies += 1
+#	if (current_ticks % 30) == 0:
+#		max_enemies += 1
 	
-	if current_ticks == 30:
-		print("difficulty increase")
+	if current_player_level == 5:
+		for spawner in get_tree().get_nodes_in_group("spawner_secondary"):
+			spawners.append(spawner)
 	
 
 func check_level_up():
@@ -44,6 +46,7 @@ func check_level_up():
 		current_player_level += 1
 		current_player_xp -= required_player_xp
 		required_player_xp += required_xp_growth
+		update_difficulty()
 	level_progress_updated.emit(current_player_xp, required_player_xp, current_player_level)
 	
 
@@ -59,7 +62,7 @@ func on_tick_timer_timeout():
 	if current_ticks == MAX_TICKS:
 		print("finished")
 	else:
-		update_difficulty()
+#		update_difficulty()
 		tick_timer.start()	
 
 
