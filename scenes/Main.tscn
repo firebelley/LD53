@@ -42,3 +42,12 @@ visible = false
 position = Vector2(392, 176)
 extents = Vector2(112, 1)
 scene = ExtResource("5_6qmi8")
+
+[node name="ResurrectApex" type="Marker2D" parent="." groups=["resurrect_marker_apex"]]
+position = Vector2(344, 64)
+
+[node name="ResurrectMarkerLeft" type="Marker2D" parent="." groups=["resurrect_marker"]]
+position = Vector2(192, 64)
+
+[node name="ResurectMarkerRight" type="Marker2D" parent="." groups=["resurrect_marker"]]
+position = Vector2(512, 64)

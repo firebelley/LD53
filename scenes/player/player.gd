@@ -17,8 +17,10 @@ const JUMP_TERMINATION_MOD = 4.0
 @onready var resource_preloader = $ResourcePreloader
 @onready var fist_scene = resource_preloader.get_resource("fist") as PackedScene
 @onready var hurtbox_area = $HurtboxArea
+@onready var pit_area = $PitArea
 
 var held_enemy: Node2D
+var current_hp = 3
 
 var state_machine = CallableStateMachine.new()
 var did_uppercut = false
@@ -28,11 +30,13 @@ func _ready():
 	state_machine.add_states(state_normal)
 	state_machine.add_states(state_airborne, enter_state_airborne, leave_state_airborne)
 	state_machine.add_states(state_knockback)
+	state_machine.add_states(state_resurrect, enter_state_resurrect, leave_state_resurrect)
 	state_machine.set_initial_state(state_normal)
 	
 	uppercut_shape.disabled = true
 	punch_shape.disabled = true
 	hurtbox_area.area_entered.connect(on_hurtbox_area_entered)
+	pit_area.area_entered.connect(on_pit_area_entered)
 
 
 func _process(_delta):
@@ -131,6 +135,28 @@ func state_knockback():
 		state_machine.change_state(state_normal)
 
 
+func enter_state_resurrect():
+	did_uppercut = false
+	velocity = Vector2.ZERO
+	current_hp -= 1
+	
+	var apex_marker = get_tree().get_first_node_in_group("resurrect_marker_apex")
+	var drop_marker = get_tree().get_nodes_in_group("resurrect_marker").pick_random()
+	var tween = create_tween()
+	tween.tween_interval(.25)
+	tween.tween_property(self, "global_position", apex_marker.global_position, 1).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+	tween.tween_property(self, "global_position", drop_marker.global_position, 1).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+	tween.tween_callback(func(): state_machine.change_state(state_normal))
+	
+
+func state_resurrect():
+	pass
+
+
+func leave_state_resurrect():
+	pass
+
+
 func get_movement_vector():
 	var x = Input.get_action_strength("move_right") - Input.get_action_strength("move_left")
 	var y = -1 if Input.is_action_just_pressed("jump") && is_on_floor() else 0
@@ -169,3 +195,7 @@ func on_hurtbox_area_entered(other_area: Area2D):
 		state_machine.change_state(state_knockback)
 		if area.owner.has_method("kill"):
 			area.owner.kill()
+
+
+func on_pit_area_entered(_other_area: Area2D):
+	state_machine.change_state(state_resurrect)

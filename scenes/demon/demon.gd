@@ -19,9 +19,11 @@ const WALK_SPEED = 50
 @onready var animation_player = $AnimationPlayer
 
 var state_machine: CallableStateMachine = CallableStateMachine.new()
+var adjusted_walk_speed = WALK_SPEED * randf_range(.9, 1.1)
 
 
 func _ready():
+	animation_player.speed_scale = randf_range(.9, 1.1)
 	state_machine.add_states(state_normal, enter_state_normal)
 	state_machine.add_states(state_airborne, enter_state_airborne)
 	state_machine.add_states(state_punched, enter_state_punched, leave_state_punched)
@@ -51,7 +53,7 @@ func state_normal():
 	if player != null:
 		x_direction = -1.0 if global_position.x > player.global_position.x else 1.0
 	
-	velocity.x = lerp(velocity.x, x_direction * WALK_SPEED, 1.0 - exp(-20 * delta))
+	velocity.x = lerp(velocity.x, x_direction * adjusted_walk_speed, 1.0 - exp(-20 * delta))
 	move_and_slide()
 	
 	if is_on_floor() && is_over_edge():
