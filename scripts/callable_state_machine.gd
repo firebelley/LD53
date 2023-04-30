@@ -24,6 +24,12 @@ func update():
 		current_state.call()
 
 
+func current_state_equals(state_to_check: Callable):
+	if current_state.is_null() && state_to_check.is_null():
+		return true
+	return !current_state.is_null() && !state_to_check.is_null() && current_state.get_method() == state_to_check.get_method()
+
+
 func change_state(to_state: Callable, immediate: bool = false):
 	var change = func():
 		var to_state_name = to_state.get_method()

@@ -8,8 +8,7 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1ixtc"]
 size = Vector2(18, 20)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_c35si"]
-size = Vector2(18, 8)
+[sub_resource type="CircleShape2D" id="CircleShape2D_vgyl2"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dt62w"]
 size = Vector2(10, 16)
@@ -50,22 +49,29 @@ collision_mask = 16
 position = Vector2(0, -10)
 shape = SubResource("RectangleShape2D_1ixtc")
 
-[node name="PickupArea" type="Area2D" parent="."]
-collision_layer = 64
-collision_mask = 0
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="PickupArea"]
-position = Vector2(0, -4)
-shape = SubResource("RectangleShape2D_c35si")
-
 [node name="PunchArea" type="Area2D" parent="."]
-visible = false
 collision_layer = 0
 collision_mask = 32
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PunchArea"]
 position = Vector2(0, -10)
 shape = SubResource("RectangleShape2D_1ixtc")
+
+[node name="KnockoutHitboxArea" type="Area2D" parent="."]
+collision_layer = 64
+collision_mask = 64
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="KnockoutHitboxArea"]
+position = Vector2(0, -9)
+shape = SubResource("CircleShape2D_vgyl2")
+
+[node name="KnockoutHurtboxArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 64
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="KnockoutHurtboxArea"]
+position = Vector2(0, -9)
+shape = SubResource("CircleShape2D_vgyl2")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -9)

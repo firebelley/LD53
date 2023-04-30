@@ -13,9 +13,9 @@ const WALK_SPEED = 50
 @onready var state_timer = $StateTimer
 @onready var projectile_timer = $ProjectileTimer
 @onready var projectile_marker = $ProjectileMarker
+@onready var knockout_hitbox_shape = $KnockoutHitboxArea/CollisionShape2D
+@onready var knockout_hurtbox_area = $KnockoutHurtboxArea
 @onready var projectile_scene = resource_preloader.get_resource("projectile") as PackedScene
-
-var state: Callable = Callable(state_normal)
 
 var state_machine: CallableStateMachine = CallableStateMachine.new()
 
@@ -23,12 +23,15 @@ var state_machine: CallableStateMachine = CallableStateMachine.new()
 func _ready():
 	state_machine.add_states(state_normal)
 	state_machine.add_states(state_airborne)
-	state_machine.add_states(state_punched, Callable(), leave_state_punched)
+	state_machine.add_states(state_punched, enter_state_punched, leave_state_punched)
 	state_machine.add_states(state_knockout, enter_state_knockout, leave_state_knockout)
 	state_machine.set_initial_state(state_normal)
 	
+	knockout_hitbox_shape.disabled = true
+	
 	uppercut_area.area_entered.connect(on_uppercut_area_entered)
 	punch_area.area_entered.connect(on_punch_area_entered)
+	knockout_hurtbox_area.area_entered.connect(on_knockout_hurtbox_area_entered)
 
 
 func _process(_delta):
@@ -58,6 +61,10 @@ func state_normal():
 		try_spawn_projectile()
 
 
+func enter_state_punched():
+	knockout_hitbox_shape.disabled = false
+
+
 func state_punched():
 	var delta = get_process_delta_time()	
 	velocity.y += GRAVITY * delta
@@ -69,6 +76,11 @@ func state_punched():
 		state_machine.change_state(state_knockout)
 
 
+func leave_state_punched():
+	knockout_hitbox_shape.disabled = true
+	visuals.rotation = 0
+
+
 func state_airborne():
 	var delta = get_process_delta_time()	
 	velocity.y += GRAVITY * delta
@@ -76,10 +88,6 @@ func state_airborne():
 	
 	if is_on_floor():
 		state_machine.change_state(state_normal)
-
-
-func leave_state_punched():
-	visuals.rotation = 0
 
 
 func enter_state_knockout():
@@ -90,7 +98,7 @@ func enter_state_knockout():
 
 func state_knockout():
 	var delta = get_process_delta_time()
-	velocity.x = lerp(velocity.x, 0.0, 1.0 - exp(-20 * delta))
+	velocity.x = lerp(velocity.x, 0.0, 1.0 - exp(-3.0 * delta))
 	move_and_slide()
 	
 	if !is_on_floor():
@@ -150,4 +158,18 @@ func on_punch_area_entered(other_area: Area2D):
 	add_sibling(particles)
 	particles.global_position = center_marker.global_position
 	particles.rotation = direction.angle()
+
+
+func on_knockout_hurtbox_area_entered(other_area: Area2D):
+	var body = other_area.owner as CharacterBody2D
+	if body == null || body == self || state_machine.current_state_equals(state_punched):
+		return
 	
+	velocity = body.velocity
+	state_machine.change_state(state_punched)
+	
+	var particles = resource_preloader.get_resource("punch_particles").instantiate() as Node2D
+	add_sibling(particles)
+	particles.global_position = center_marker.global_position
+	particles.rotation = velocity.angle()
+	HitstopManager.shake_camera()

@@ -94,12 +94,13 @@ func state_airborne():
 	if is_instance_valid(fist_instance):
 		fist_instance.set_direction(mouse_direction)
 
-	if Input.is_action_just_pressed("punch"):
+	if Input.is_action_pressed("punch"):
 		Engine.time_scale = .25
-		fist_instance = fist_scene.instantiate()
-		add_child(fist_instance)
-		fist_instance.global_position = punch_area.global_position
-		fist_instance.set_initial_direction(mouse_direction)
+		if !is_instance_valid(fist_instance):
+			fist_instance = fist_scene.instantiate()
+			add_child(fist_instance)
+			fist_instance.global_position = punch_area.global_position
+			fist_instance.set_initial_direction(mouse_direction)
 	if Input.is_action_just_released("punch"):
 		velocity.y = 0
 		Engine.time_scale = 1.0
@@ -109,6 +110,7 @@ func state_airborne():
 		timer.timeout.connect(on_punch_timer_timeout)
 		if is_instance_valid(fist_instance):
 			fist_instance.punch()
+		fist_instance = null
 
 	if is_on_floor():
 		state_machine.change_state(state_normal)
@@ -146,6 +148,11 @@ func activate_uppercut():
 	uppercut_shape.disabled = false
 	await get_tree().create_timer(.1).timeout
 	uppercut_shape.disabled = true
+	var uppercut_fist = fist_scene.instantiate()
+	add_child(uppercut_fist)
+	uppercut_fist.global_position = punch_area.global_position
+	uppercut_fist.set_initial_direction(Vector2.UP)
+	uppercut_fist.punch()
 	
 
 func on_punch_timer_timeout():
