@@ -3,6 +3,7 @@
 [ext_resource type="Script" path="res://scenes/pit/pit.gd" id="1_okbtb"]
 [ext_resource type="Shader" path="res://scenes/pit/pit.gdshader" id="2_epvdl"]
 [ext_resource type="PackedScene" uid="uid://b6yfvfmwx01js" path="res://scenes/effect/pit_explosion_particles.tscn" id="2_tqu60"]
+[ext_resource type="Texture2D" uid="uid://cuvvywgxdfkkh" path="res://assets/environment/pit.png" id="4_t3jgn"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_snm05"]
 noise_type = 3
@@ -23,9 +24,6 @@ shader_parameter/color_three = Color(0.901961, 0.313726, 0.313726, 1)
 shader_parameter/color_four = Color(1, 0.976471, 0.701961, 1)
 shader_parameter/noise_texture = SubResource("NoiseTexture2D_pbshs")
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_dbrjg"]
-size = Vector2(160, 500)
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_m7qd3"]
 size = Vector2(160, 160)
 
@@ -38,11 +36,10 @@ resources = [PackedStringArray("pit_explosion_particles"), [ExtResource("2_tqu60
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture_repeat = 2
 material = SubResource("ShaderMaterial_d26jw")
-position = Vector2(0, 166)
-texture = SubResource("PlaceholderTexture2D_dbrjg")
+position = Vector2(0, 163)
+texture = ExtResource("4_t3jgn")
 
 [node name="Area2D" type="Area2D" parent="."]
-visible = false
 collision_layer = 4
 collision_mask = 16
 

@@ -8,11 +8,11 @@ uniform vec4 color_three : source_color;
 uniform vec4 color_four : source_color;
 
 void fragment() {
-	vec2 adjusted_uv_one = (UV * .03) + vec2(0.05 * TIME, 0);
-	vec2 adjusted_uv_two = (UV * .05) + vec2(0.02 * TIME, 0);
-	vec2 adjusted_uv_three = (UV * .04) + vec2(0.1 * TIME, 0);
-	vec2 adjusted_uv_four = (UV * .08) + vec2(0, 0.15 * TIME);
-	vec2 surface_uv = (UV * .1) + vec2(0.3 * TIME, 0);
+	vec2 adjusted_uv_one = (UV * vec2(3.0, 7.0)) + vec2(0.05 * TIME, 0);
+	vec2 adjusted_uv_two = (UV * vec2(3.0, 7.0)) + vec2(0.02 * TIME, 0);
+	vec2 adjusted_uv_three = (UV * vec2(3.0, 7.0)) + vec2(0.1 * TIME, 0);
+	vec2 adjusted_uv_four = (UV * vec2(3.0, 7.0)) + vec2(0, 0.15 * TIME);
+	vec2 surface_uv = (UV) + vec2(0.3 * TIME, 0);
 	float noise_sample_one = texture(noise_texture, adjusted_uv_one).r;
 	float noise_sample_two = texture(noise_texture, adjusted_uv_two).r;
 	float noise_sample_three = texture(noise_texture, adjusted_uv_three).r;
@@ -35,10 +35,10 @@ void fragment() {
 		COLOR = color_three;
 	}
 	
-	if ((average * UV.y) < .9) {
+	if ((average * UV.y) < .006) {
 		COLOR = color_two;
 	}
-	if ((average * UV.y) < .6) {
+	if ((average * UV.y) < .003) {
 		COLOR.a = 0.0;
 	}
 }
