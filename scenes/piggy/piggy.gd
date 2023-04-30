@@ -6,7 +6,6 @@ const WALK_SPEED = 50
 @onready var uppercut_area: Area2D = $UpperCutArea
 @onready var punch_area: Area2D = $PunchArea
 @onready var visuals: Node2D = $Visuals
-@onready var visuals_root = $Visuals/VisualsRoot
 @onready var resource_preloader: ResourcePreloader = $ResourcePreloader
 @onready var center_marker = %CenterMarker
 @onready var raycasts = $Raycasts
@@ -23,7 +22,7 @@ var adjusted_walk_speed = WALK_SPEED * randf_range(.9, 1.1)
 
 
 func _ready():
-	animation_player.speed_scale = randf_range(.9, 1.1)
+#	animation_player.speed_scale = randf_range(.9, 1.1)
 	state_machine.add_states(state_normal, enter_state_normal)
 	state_machine.add_states(state_airborne, enter_state_airborne)
 	state_machine.add_states(state_punched, enter_state_punched, leave_state_punched)
@@ -42,36 +41,40 @@ func _process(_delta):
 
 
 func enter_state_normal():
-	animation_player.play("run")
+#	animation_player.play("run")
+	pass
 
 
 func state_normal():
 	var delta = get_process_delta_time()
 	var player = get_tree().get_first_node_in_group("player")
 	
-	var x_direction = 0.0
+	var target_position = Vector2(global_position.x, 64)
 	if player != null:
-		x_direction = -1.0 if global_position.x > player.global_position.x else 1.0
+		target_position.x = player.global_position.x
+
 	
-	velocity.x = lerp(velocity.x, x_direction * adjusted_walk_speed, 1.0 - exp(-20 * delta))
+	var target_direction = (target_position - global_position).normalized()
+	velocity = velocity.lerp(target_direction * adjusted_walk_speed, 1.0 - exp(-5 * delta))
+	
 	move_and_slide()
 	
-	if is_on_floor() && is_over_edge():
-		velocity.y -= 200
-		velocity.x *= 3.0
-	
-	if !is_on_floor():
-		state_machine.change_state(state_airborne)
-		
-	if projectile_timer.is_stopped():
-		projectile_timer.start()
-		try_spawn_projectile()
+#	if is_on_floor() && is_over_edge():
+#		velocity.y -= 200
+#		velocity.x *= 3.0
+#
+#	if !is_on_floor():
+#		state_machine.change_state(state_airborne)
+#
+#	if projectile_timer.is_stopped():
+#		projectile_timer.start()
+#		try_spawn_projectile()
 	
 	update_facing()
 
 
 func enter_state_punched():
-	animation_player.play("airborne")
+#	animation_player.play("airborne")
 	knockout_hitbox_shape.disabled = false
 
 
@@ -109,8 +112,8 @@ func state_airborne():
 
 
 func enter_state_knockout():
-	animation_player.play("RESET")
-	visuals_root.rotation = deg_to_rad(-90)
+#	animation_player.play("RESET")
+	visuals.rotation = deg_to_rad(-90)
 	visuals.position = Vector2.UP * 4
 	state_timer.wait_time = 5
 	state_timer.start()
@@ -130,7 +133,7 @@ func state_knockout():
 	
 	
 func leave_state_knockout():
-	visuals_root.rotation = 0
+	visuals.rotation = 0
 	visuals.position = Vector2.ZERO
 	
 

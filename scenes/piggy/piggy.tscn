@@ -1,0 +1,110 @@
+[gd_scene load_steps=12 format=3 uid="uid://cb4hjudh2413q"]
+
+[ext_resource type="Script" path="res://scenes/piggy/piggy.gd" id="1_ydybj"]
+[ext_resource type="PackedScene" uid="uid://c0slylsf6jlls" path="res://scenes/projectile/projectile.tscn" id="2_whbrf"]
+[ext_resource type="PackedScene" uid="uid://cvgc3ypo1apv" path="res://scenes/effect/punch_particles.tscn" id="3_sildu"]
+[ext_resource type="Texture2D" uid="uid://cw1uhgsj1yhxw" path="res://assets/piggy/head.png" id="5_0eti8"]
+[ext_resource type="Texture2D" uid="uid://cxt674a0sc1ik" path="res://assets/piggy/basket.png" id="6_5nfys"]
+[ext_resource type="Texture2D" uid="uid://bhahpwt5rxm75" path="res://assets/piggy/balloon.png" id="7_rt0om"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_edrcl"]
+size = Vector2(18, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_d8ry2"]
+size = Vector2(18, 20)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_x8fed"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_61rvn"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4olhe"]
+size = Vector2(10, 16)
+
+[node name="Piggy" type="CharacterBody2D"]
+collision_layer = 16
+script = ExtResource("1_ydybj")
+
+[node name="StateTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="ResourcePreloader" type="ResourcePreloader" parent="."]
+resources = [PackedStringArray("projectile", "punch_particles"), [ExtResource("2_whbrf"), ExtResource("3_sildu")]]
+
+[node name="Visuals" type="Node2D" parent="."]
+
+[node name="Basket" type="Sprite2D" parent="Visuals"]
+position = Vector2(0, -10)
+texture = ExtResource("6_5nfys")
+centered = false
+offset = Vector2(-10, -14)
+
+[node name="Head" type="Sprite2D" parent="Visuals"]
+position = Vector2(0, -16)
+texture = ExtResource("5_0eti8")
+centered = false
+offset = Vector2(-9, -12)
+
+[node name="Balloon" type="Sprite2D" parent="Visuals"]
+position = Vector2(-1, -26)
+texture = ExtResource("7_rt0om")
+centered = false
+offset = Vector2(-12, -36)
+
+[node name="CenterMarker" type="Marker2D" parent="Visuals"]
+unique_name_in_owner = true
+position = Vector2(0, -18)
+
+[node name="UpperCutArea" type="Area2D" parent="."]
+visible = false
+collision_layer = 0
+collision_mask = 16
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="UpperCutArea"]
+position = Vector2(0, -10)
+shape = SubResource("RectangleShape2D_edrcl")
+
+[node name="PunchArea" type="Area2D" parent="."]
+visible = false
+collision_layer = 0
+collision_mask = 32
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PunchArea"]
+position = Vector2(0, -10)
+shape = SubResource("RectangleShape2D_d8ry2")
+
+[node name="KnockoutHitboxArea" type="Area2D" parent="."]
+visible = false
+collision_layer = 64
+collision_mask = 64
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="KnockoutHitboxArea"]
+position = Vector2(0, -9)
+shape = SubResource("CircleShape2D_x8fed")
+
+[node name="KnockoutHurtboxArea" type="Area2D" parent="."]
+visible = false
+collision_layer = 0
+collision_mask = 64
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="KnockoutHurtboxArea"]
+position = Vector2(0, -9)
+shape = SubResource("CircleShape2D_61rvn")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2(0, -10)
+shape = SubResource("RectangleShape2D_4olhe")
+
+[node name="Raycasts" type="Node2D" parent="."]
+visible = false
+
+[node name="RayCast2D" type="RayCast2D" parent="Raycasts"]
+position = Vector2(-5, -2)
+target_position = Vector2(0, 10)
+
+[node name="RayCast2D2" type="RayCast2D" parent="Raycasts"]
+position = Vector2(5, -2)
+target_position = Vector2(0, 10)
+
+[node name="ProjectileMarker" type="Marker2D" parent="."]
+position = Vector2(0, -11)

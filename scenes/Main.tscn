@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://d0of2oxxmpkxs"]
+[gd_scene load_steps=11 format=3 uid="uid://d0of2oxxmpkxs"]
 
 [ext_resource type="Script" path="res://scenes/Main.gd" id="1_xcyq1"]
 [ext_resource type="PackedScene" uid="uid://dg7m2ur78tcya" path="res://scenes/player/player.tscn" id="2_g45wp"]
@@ -7,6 +7,7 @@
 [ext_resource type="TileSet" uid="uid://bfvvph1h8ohka" path="res://resources/tiles.tres" id="3_8n8cu"]
 [ext_resource type="PackedScene" uid="uid://bs4hqc4o6qyxt" path="res://scenes/game_camera/game_camera.tscn" id="4_t7rqv"]
 [ext_resource type="PackedScene" uid="uid://bbp1bki3tgpvf" path="res://scenes/demon/demon.tscn" id="5_6qmi8"]
+[ext_resource type="PackedScene" uid="uid://cb4hjudh2413q" path="res://scenes/piggy/piggy.tscn" id="6_upb8d"]
 [ext_resource type="PackedScene" uid="uid://e061nuhcd5c2" path="res://scenes/pit/pit.tscn" id="6_xqr0v"]
 [ext_resource type="PackedScene" uid="uid://b5n2ofivw5sac" path="res://scenes/spawner/spawner.tscn" id="7_snuft"]
 
@@ -20,10 +21,13 @@ game_manager = NodePath("../GameManager")
 
 [node name="GameCamera" parent="." instance=ExtResource("4_t7rqv")]
 
-[node name="Entities" type="Node2D" parent="." groups=["entities_layer"]]
-
 [node name="Player" parent="." groups=["player"] instance=ExtResource("2_g45wp")]
 position = Vector2(253, 176)
+
+[node name="Entities" type="Node2D" parent="." groups=["entities_layer"]]
+
+[node name="Piggy" parent="Entities" instance=ExtResource("6_upb8d")]
+position = Vector2(456, 64)
 
 [node name="Pit" parent="." instance=ExtResource("6_xqr0v")]
 position = Vector2(344, 344)

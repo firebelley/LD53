@@ -11,7 +11,7 @@ void fragment() {
 	vec2 adjusted_uv_one = (UV * .03) + vec2(0.05 * TIME, 0);
 	vec2 adjusted_uv_two = (UV * .05) + vec2(0.02 * TIME, 0);
 	vec2 adjusted_uv_three = (UV * .04) + vec2(0.1 * TIME, 0);
-	vec2 adjusted_uv_four = (UV * .08) + vec2(0.15 * TIME, 0);
+	vec2 adjusted_uv_four = (UV * .08) + vec2(0, 0.15 * TIME);
 	vec2 surface_uv = (UV * .1) + vec2(0.3 * TIME, 0);
 	float noise_sample_one = texture(noise_texture, adjusted_uv_one).r;
 	float noise_sample_two = texture(noise_texture, adjusted_uv_two).r;
