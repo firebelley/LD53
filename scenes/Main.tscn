@@ -1,9 +1,10 @@
-[gd_scene load_steps=11 format=3 uid="uid://d0of2oxxmpkxs"]
+[gd_scene load_steps=12 format=3 uid="uid://d0of2oxxmpkxs"]
 
 [ext_resource type="Script" path="res://scenes/Main.gd" id="1_xcyq1"]
 [ext_resource type="PackedScene" uid="uid://dg7m2ur78tcya" path="res://scenes/player/player.tscn" id="2_g45wp"]
 [ext_resource type="PackedScene" uid="uid://vk6txihi1bf4" path="res://scenes/manager/game_manager.tscn" id="2_q4mk4"]
 [ext_resource type="PackedScene" uid="uid://dv0vunf5lax7e" path="res://scenes/ui/experience_bar.tscn" id="2_tc1ae"]
+[ext_resource type="AudioStream" uid="uid://efw18v62adtw" path="res://assets/audio/music.wav" id="2_x3juv"]
 [ext_resource type="TileSet" uid="uid://bfvvph1h8ohka" path="res://resources/tiles.tres" id="3_8n8cu"]
 [ext_resource type="PackedScene" uid="uid://bs4hqc4o6qyxt" path="res://scenes/game_camera/game_camera.tscn" id="4_t7rqv"]
 [ext_resource type="PackedScene" uid="uid://bbp1bki3tgpvf" path="res://scenes/demon/demon.tscn" id="5_6qmi8"]
@@ -13,6 +14,11 @@
 
 [node name="Main" type="Node"]
 script = ExtResource("1_xcyq1")
+
+[node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_x3juv")
+volume_db = -5.0
+bus = &"music"
 
 [node name="ExperienceBar" parent="." node_paths=PackedStringArray("game_manager") instance=ExtResource("2_tc1ae")]
 game_manager = NodePath("../GameManager")
