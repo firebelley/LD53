@@ -23,7 +23,7 @@ func spawn():
 		return
 	var position = get_random_spawn_point()
 	var instance = scene.instantiate()
-	add_sibling(instance)
+	get_tree().get_first_node_in_group("entities_layer").add_child(instance)
 	instance.global_position = position
 
 
