@@ -22,7 +22,7 @@ var adjusted_walk_speed = WALK_SPEED * randf_range(.9, 1.1)
 
 
 func _ready():
-#	animation_player.speed_scale = randf_range(.9, 1.1)
+	animation_player.speed_scale = randf_range(.9, 1.1)
 	state_machine.add_states(state_normal, enter_state_normal)
 	state_machine.add_states(state_airborne, enter_state_airborne)
 	state_machine.add_states(state_punched, enter_state_punched, leave_state_punched)
@@ -41,8 +41,8 @@ func _process(_delta):
 
 
 func enter_state_normal():
-#	animation_player.play("run")
-	pass
+	animation_player.play("RESET")
+	animation_player.queue("run")
 
 
 func state_normal():
@@ -74,7 +74,7 @@ func state_normal():
 
 
 func enter_state_punched():
-#	animation_player.play("airborne")
+	animation_player.play("airborne")
 	knockout_hitbox_shape.disabled = false
 
 
