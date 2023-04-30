@@ -6,4 +6,5 @@ func _ready():
 
 
 func on_body_entered(body: PhysicsBody2D):
+	GameEvents.emit_enemy_banished(body, 1)
 	body.queue_free()

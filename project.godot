@@ -21,6 +21,7 @@ config/icon="res://icon.png"
 [autoload]
 
 HitstopManager="*res://scenes/autoload/hitstop_manager.tscn"
+GameEvents="*res://scenes/autoload/game_events.tscn"
 
 [debug]
 

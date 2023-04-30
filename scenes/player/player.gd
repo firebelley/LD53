@@ -159,5 +159,6 @@ func on_hurtbox_area_entered(other_area: Area2D):
 		var xsign = sign(global_position.x - other_area.global_position.x)
 		var direction = Vector2.UP.rotated(deg_to_rad(25 * xsign))
 		velocity = direction * area.knockback_force
-		print(area.knockback_force)
 		state_machine.change_state(state_knockback)
+		if area.owner.has_method("kill"):
+			area.owner.kill()

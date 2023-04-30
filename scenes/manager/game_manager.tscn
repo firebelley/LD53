@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://vk6txihi1bf4"]
+
+[ext_resource type="Script" path="res://scenes/manager/game_manager.gd" id="1_0x0p1"]
+
+[node name="GameManager" type="Node"]
+script = ExtResource("1_0x0p1")
+
+[node name="TickTimer" type="Timer" parent="."]
+one_shot = true

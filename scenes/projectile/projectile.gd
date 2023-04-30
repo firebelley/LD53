@@ -12,3 +12,6 @@ func _process(delta):
 func start(dir: Vector2):
 	direction = dir
 
+
+func kill():
+	queue_free()
