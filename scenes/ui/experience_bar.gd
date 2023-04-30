@@ -22,4 +22,5 @@ func on_level_progress_updated(current_progress: int, required_progress: int, cu
 	current_tween = create_tween()
 	current_tween.tween_property(progress_bar, "value", target_value, .2).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_SINE)
 	
-	level_label.text = "Level %s" % (current_level + 1)
+	var level_to_use = 9 if current_level > 9 else current_level
+	level_label.text = "Level %s" % (level_to_use + 1)

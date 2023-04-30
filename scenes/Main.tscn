@@ -56,18 +56,29 @@ layer_0/tile_data = PackedInt32Array(1245219, 65536, 2, 1179683, 65536, 2, 11141
 
 [node name="Spawner" parent="." instance=ExtResource("7_snuft")]
 visible = false
-position = Vector2(72, 176)
-extents = Vector2(112, 1)
+position = Vector2(-112, 176)
+extents = Vector2(200, 1)
 scene = ExtResource("5_6qmi8")
 
 [node name="Spawner2" parent="." instance=ExtResource("7_snuft")]
 visible = false
-position = Vector2(392, 176)
-extents = Vector2(112, 1)
+position = Vector2(400, 176)
+extents = Vector2(200, 1)
+scene = ExtResource("5_6qmi8")
+
+[node name="Spawner4" parent="." instance=ExtResource("7_snuft")]
+visible = false
+position = Vector2(-112, 176)
+extents = Vector2(200, 1)
+scene = ExtResource("5_6qmi8")
+
+[node name="Spawner5" parent="." instance=ExtResource("7_snuft")]
+visible = false
+position = Vector2(400, 176)
+extents = Vector2(200, 1)
 scene = ExtResource("5_6qmi8")
 
 [node name="Spawner3" parent="." groups=["spawner_secondary"] instance=ExtResource("7_snuft")]
-visible = false
 position = Vector2(80, 176)
 extents = Vector2(300, 1)
 scene = ExtResource("6_upb8d")
@@ -137,3 +148,27 @@ text = "reach level
 don't fall into pit!"
 horizontal_alignment = 1
 uppercase = true
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+custom_minimum_size = Vector2(500, 500)
+offset_left = 96.0
+offset_top = -192.0
+offset_right = 596.0
+offset_bottom = 308.0
+pivot_offset = Vector2(250, 250)
+mouse_filter = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/outline_size = 8
+theme_override_font_sizes/font_size = 32
+text = "VICTORY!"
+horizontal_alignment = 1
+
+[node name="Label2" type="Label" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "YOUTUBE @FirebelleyGames"
+horizontal_alignment = 1

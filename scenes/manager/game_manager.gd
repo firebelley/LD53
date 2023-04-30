@@ -4,6 +4,7 @@ class_name GameManager
 signal level_progress_updated(current_progress: int, required_progress: int, level: int)
 
 const MAX_TICKS = 60 * 5
+const TARGET_LEVEL = 10
 
 @onready var tick_timer: Timer = $TickTimer
 @onready var spawn_timer: Timer = $SpawnTimer
@@ -15,7 +16,7 @@ var current_player_xp = 0
 var current_player_level = 0
 var spawners = []
 
-var max_enemies = 3
+var max_enemies = 2
 var current_enemies = 0
 var enemies_per_15_ticks = 1
 
@@ -40,6 +41,7 @@ func update_difficulty():
 		for spawner in get_tree().get_nodes_in_group("spawner_secondary"):
 			spawners.append(spawner)
 	
+	
 
 func check_level_up():
 	while current_player_xp >= required_player_xp:
@@ -51,9 +53,16 @@ func check_level_up():
 	
 
 func on_enemy_banished(enemy: Node2D, points: int):
+	if enemy.has_method("is_dummy") && enemy.is_dummy():
+		return
 	current_enemies -= 1
 	current_player_xp += points
 	check_level_up()
+	print(current_enemies)
+	if current_player_level >= TARGET_LEVEL:
+		spawn_timer.stop()
+		if current_enemies <= 0:
+			GameEvents.emit_victory()
 	
 
 func on_game_started():
