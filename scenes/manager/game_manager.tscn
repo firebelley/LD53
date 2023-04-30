@@ -9,4 +9,3 @@ script = ExtResource("1_0x0p1")
 one_shot = true
 
 [node name="SpawnTimer" type="Timer" parent="."]
-autostart = true

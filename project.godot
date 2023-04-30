@@ -50,6 +50,7 @@ import/fbx/enabled=false
 
 [gui]
 
+theme/custom="res://resources/theme.tres"
 theme/default_font_antialiasing=0
 theme/default_font_hinting=0
 theme/default_font_subpixel_positioning=0

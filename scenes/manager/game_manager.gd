@@ -20,7 +20,7 @@ var current_enemies = 0
 var enemies_per_15_ticks = 1
 
 func _ready():
-	tick_timer.start()
+	GameEvents.game_started.connect(on_game_started)
 	GameEvents.enemy_banished.connect(on_enemy_banished)
 	tick_timer.timeout.connect(on_tick_timer_timeout)
 	setup_spawners()
@@ -55,6 +55,11 @@ func on_enemy_banished(enemy: Node2D, points: int):
 	current_player_xp += points
 	check_level_up()
 	
+
+func on_game_started():
+	tick_timer.start()
+	spawn_timer.start()
+
 
 func on_tick_timer_timeout():
 	current_ticks += 1

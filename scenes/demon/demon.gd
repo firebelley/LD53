@@ -3,6 +3,8 @@ extends CharacterBody2D
 const GRAVITY = 500
 const WALK_SPEED = 50
 
+@export var dummy: bool
+
 @onready var uppercut_area: Area2D = $UpperCutArea
 @onready var punch_area: Area2D = $PunchArea
 @onready var visuals: Node2D = $Visuals
@@ -28,6 +30,8 @@ func _ready():
 	state_machine.add_states(state_airborne, enter_state_airborne)
 	state_machine.add_states(state_punched, enter_state_punched, leave_state_punched)
 	state_machine.add_states(state_knockout, enter_state_knockout, leave_state_knockout)
+	state_machine.add_states(state_dummy, enter_state_dummy)
+
 	state_machine.set_initial_state(state_normal)
 	
 	knockout_hitbox_shape.disabled = true
@@ -42,7 +46,10 @@ func _process(_delta):
 
 
 func enter_state_normal():
-	animation_player.play("run")
+	if dummy:
+		state_machine.change_state(state_dummy)
+	else:
+		animation_player.play("run")
 
 
 func state_normal():
@@ -54,6 +61,7 @@ func state_normal():
 		x_direction = -1.0 if global_position.x > player.global_position.x else 1.0
 	
 	velocity.x = lerp(velocity.x, x_direction * adjusted_walk_speed, 1.0 - exp(-20 * delta))
+	velocity.y += GRAVITY * delta
 	move_and_slide()
 	
 	if is_on_floor() && is_over_edge():
@@ -73,6 +81,19 @@ func state_normal():
 func enter_state_punched():
 	animation_player.play("airborne")
 	knockout_hitbox_shape.disabled = false
+
+
+func enter_state_dummy():
+	animation_player.play("RESET")
+
+
+func state_dummy():
+	var delta = get_process_delta_time()
+	velocity.x = lerp(velocity.x, 0.0, 1.0 - exp(-20 * delta))
+	velocity.y += GRAVITY * delta
+	move_and_slide()
+	if !is_on_floor():
+		state_machine.change_state(state_airborne)
 
 
 func state_punched():
@@ -159,6 +180,10 @@ func try_spawn_projectile():
 
 func update_facing():
 	visuals.scale = Vector2(-1, 1) if velocity.x < 0 else Vector2.ONE
+
+
+func is_dummy():
+	return dummy
 
 
 func on_uppercut_area_entered(_other_area: Area2D):

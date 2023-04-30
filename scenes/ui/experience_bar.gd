@@ -3,6 +3,7 @@ extends CanvasLayer
 
 @export var game_manager: GameManager
 @onready var progress_bar = %ProgressBar
+@onready var level_label = %LevelLabel
 
 var current_tween: Tween
 
@@ -20,4 +21,5 @@ func on_level_progress_updated(current_progress: int, required_progress: int, cu
 	
 	current_tween = create_tween()
 	current_tween.tween_property(progress_bar, "value", target_value, .2).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_SINE)
-
+	
+	level_label.text = "Level %s" % (current_level + 1)

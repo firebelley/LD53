@@ -27,7 +27,21 @@ game_manager = NodePath("../GameManager")
 
 [node name="GameCamera" parent="." instance=ExtResource("4_t7rqv")]
 
+[node name="DeliverLabel" type="Label" parent="."]
+offset_left = 440.0
+offset_top = 112.0
+offset_right = 548.0
+offset_bottom = 138.0
+text = "deliver
+me to hell!"
+horizontal_alignment = 1
+uppercase = true
+
 [node name="Entities" type="Node2D" parent="." groups=["entities_layer"]]
+
+[node name="Demon" parent="Entities" instance=ExtResource("5_6qmi8")]
+position = Vector2(488, 176)
+dummy = true
 
 [node name="Player" parent="." groups=["player"] instance=ExtResource("2_g45wp")]
 position = Vector2(253, 176)
@@ -66,3 +80,60 @@ position = Vector2(192, 64)
 
 [node name="ResurectMarkerRight" type="Marker2D" parent="." groups=["resurrect_marker"]]
 position = Vector2(512, 64)
+
+[node name="Tutorial" type="Node2D" parent="."]
+
+[node name="Label" type="Label" parent="Tutorial"]
+offset_left = 128.0
+offset_top = 208.0
+offset_right = 205.0
+offset_bottom = 221.0
+rotation = -0.0400315
+text = "WASD to move"
+uppercase = true
+
+[node name="Label2" type="Label" parent="Tutorial"]
+offset_left = 416.0
+offset_top = 200.0
+offset_right = 484.0
+offset_bottom = 226.0
+rotation = 0.0544354
+text = "RIGHT MOUSE
+UPPERCUT"
+horizontal_alignment = 1
+uppercase = true
+
+[node name="Label3" type="Label" parent="Tutorial"]
+offset_left = 208.0
+offset_top = 232.0
+offset_right = 297.0
+offset_bottom = 258.0
+rotation = -0.0199267
+text = "space to jump
+hold for high
+jump"
+horizontal_alignment = 1
+uppercase = true
+
+[node name="Label4" type="Label" parent="Tutorial"]
+offset_left = 400.0
+offset_top = 240.0
+offset_right = 492.0
+offset_bottom = 266.0
+rotation = -0.0336608
+text = "hold left mouse
+in air to
+charge punch"
+horizontal_alignment = 1
+uppercase = true
+
+[node name="Label5" type="Label" parent="Tutorial"]
+offset_left = 496.0
+offset_top = 200.0
+offset_right = 604.0
+offset_bottom = 226.0
+rotation = -0.0539695
+text = "reach level
+don't fall into pit!"
+horizontal_alignment = 1
+uppercase = true
