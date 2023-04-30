@@ -6,7 +6,7 @@ const WALK_SPEED = 50
 @onready var uppercut_area: Area2D = $UpperCutArea
 @onready var punch_area: Area2D = $PunchArea
 @onready var visuals: Node2D = $Visuals
-@onready var sprite: Sprite2D = $Visuals/Sprite2D
+@onready var visuals_root = $Visuals/VisualsRoot
 @onready var resource_preloader: ResourcePreloader = $ResourcePreloader
 @onready var center_marker = %CenterMarker
 @onready var raycasts = $Raycasts
@@ -16,13 +16,14 @@ const WALK_SPEED = 50
 @onready var knockout_hitbox_shape = $KnockoutHitboxArea/CollisionShape2D
 @onready var knockout_hurtbox_area = $KnockoutHurtboxArea
 @onready var projectile_scene = resource_preloader.get_resource("projectile") as PackedScene
+@onready var animation_player = $AnimationPlayer
 
 var state_machine: CallableStateMachine = CallableStateMachine.new()
 
 
 func _ready():
-	state_machine.add_states(state_normal)
-	state_machine.add_states(state_airborne)
+	state_machine.add_states(state_normal, enter_state_normal)
+	state_machine.add_states(state_airborne, enter_state_airborne)
 	state_machine.add_states(state_punched, enter_state_punched, leave_state_punched)
 	state_machine.add_states(state_knockout, enter_state_knockout, leave_state_knockout)
 	state_machine.set_initial_state(state_normal)
@@ -36,6 +37,10 @@ func _ready():
 
 func _process(_delta):
 	state_machine.update()
+
+
+func enter_state_normal():
+	animation_player.play("run")
 
 
 func state_normal():
@@ -59,9 +64,12 @@ func state_normal():
 	if projectile_timer.is_stopped():
 		projectile_timer.start()
 		try_spawn_projectile()
+	
+	update_facing()
 
 
 func enter_state_punched():
+	animation_player.play("airborne")
 	knockout_hitbox_shape.disabled = false
 
 
@@ -74,11 +82,17 @@ func state_punched():
 	
 	if is_on_floor():
 		state_machine.change_state(state_knockout)
+	
+	update_facing()
 
 
 func leave_state_punched():
 	knockout_hitbox_shape.disabled = true
 	visuals.rotation = 0
+
+
+func enter_state_airborne():
+	animation_player.play("airborne")
 
 
 func state_airborne():
@@ -88,10 +102,13 @@ func state_airborne():
 	
 	if is_on_floor():
 		state_machine.change_state(state_normal)
+	
+	update_facing()
 
 
 func enter_state_knockout():
-	sprite.rotation = rad_to_deg(90)
+	animation_player.play("RESET")
+	visuals_root.rotation = rad_to_deg(90)
 	state_timer.wait_time = 5
 	state_timer.start()
 
@@ -109,7 +126,7 @@ func state_knockout():
 	
 	
 func leave_state_knockout():
-	sprite.rotation = 0
+	visuals_root.rotation = 0
 	
 
 func is_over_edge():
@@ -134,6 +151,10 @@ func try_spawn_projectile():
 	add_sibling(projectile)
 	projectile.global_position = projectile_marker.global_position
 	projectile.start(direction)
+
+
+func update_facing():
+	visuals.scale = Vector2(-1, 1) if velocity.x < 0 else Vector2.ONE
 
 
 func on_uppercut_area_entered(_other_area: Area2D):
@@ -163,7 +184,7 @@ func on_punch_area_entered(other_area: Area2D):
 
 func on_knockout_hurtbox_area_entered(other_area: Area2D):
 	var body = other_area.owner as CharacterBody2D
-	if body == null || body == self || state_machine.current_state_equals(state_punched):
+	if body == null || body == self || state_machine.current_state_equals(state_punched) || state_machine.current_state_equals(state_knockout):
 		return
 	
 	velocity = body.velocity
