@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://dg7m2ur78tcya"]
+[gd_scene load_steps=20 format=3 uid="uid://dg7m2ur78tcya"]
 
 [ext_resource type="Script" path="res://scenes/player/player.gd" id="1_c660e"]
 [ext_resource type="PackedScene" uid="uid://bubbwkd2okp1y" path="res://scenes/fist/fist.tscn" id="2_xsxkl"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://dwqdy3tqnxsdx" path="res://assets/player/arm_left.png" id="4_wxqe2"]
 [ext_resource type="Texture2D" uid="uid://x04ev0xadqm0" path="res://assets/player/leg_right.png" id="5_uds3u"]
 [ext_resource type="Texture2D" uid="uid://bgnhjj5u3cgok" path="res://assets/player/leg_left.png" id="6_g48a0"]
+[ext_resource type="Texture2D" uid="uid://bk2chvfio474m" path="res://assets/player/wings.png" id="8_qv6dd"]
 [ext_resource type="Script" path="res://addons/node_library/scripts/random_audio_stream_player.gd" id="8_vp7nq"]
 [ext_resource type="AudioStream" uid="uid://cs4bfkhtgo601" path="res://assets/audio/jump3.wav" id="9_oiulu"]
 
@@ -418,6 +419,14 @@ libraries = {
 }
 
 [node name="Visuals" type="Node2D" parent="."]
+
+[node name="Wings" type="Sprite2D" parent="Visuals"]
+unique_name_in_owner = true
+visible = false
+position = Vector2(0, -8)
+texture = ExtResource("8_qv6dd")
+centered = false
+offset = Vector2(-25, -16)
 
 [node name="ArmRight" type="Sprite2D" parent="Visuals"]
 position = Vector2(3, -8)

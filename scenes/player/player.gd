@@ -19,6 +19,7 @@ const JUMP_TERMINATION_MOD = 4.0
 @onready var hurtbox_area = $HurtboxArea
 @onready var pit_area = $PitArea
 @onready var jump_stream_player = $JumpStreamPlayer
+@onready var wings = %Wings
 
 var held_enemy: Node2D
 var current_hp = 3
@@ -145,14 +146,24 @@ func enter_state_resurrect():
 	did_uppercut = false
 	velocity = Vector2.ZERO
 	current_hp -= 1
+	GameEvents.emit_player_health_change(current_hp, 3)
 	
-	var apex_marker = get_tree().get_first_node_in_group("resurrect_marker_apex")
-	var drop_marker = get_tree().get_nodes_in_group("resurrect_marker").pick_random()
-	var tween = create_tween()
-	tween.tween_interval(.25)
-	tween.tween_property(self, "global_position", apex_marker.global_position, 1).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
-	tween.tween_property(self, "global_position", drop_marker.global_position, 1).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
-	tween.tween_callback(func(): state_machine.change_state(state_normal))
+	if current_hp > 0:
+		var apex_marker = get_tree().get_first_node_in_group("resurrect_marker_apex")
+		var drop_marker = get_tree().get_nodes_in_group("resurrect_marker").pick_random()
+		var tween = create_tween()
+		tween.tween_property(wings, "scale", Vector2.ZERO, 0.0)
+		tween.tween_property(wings, "visible", true, 0.0)
+		tween.tween_property(wings, "scale", Vector2.ONE, .5).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK)
+		tween.tween_property(self, "global_position", apex_marker.global_position, 1).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+		tween.tween_property(self, "global_position", drop_marker.global_position, 1).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+		tween.tween_callback(func(): state_machine.change_state(state_normal))
+		tween.tween_property(wings, "scale", Vector2.ZERO, .5).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK)
+		tween.tween_property(wings, "visible", false, 0.0)
+	else:
+		GameEvents.emit_game_over()
+		visible = false
+	
 	
 
 func state_resurrect():

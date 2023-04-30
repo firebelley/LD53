@@ -26,6 +26,7 @@ game_manager = NodePath("../GameManager")
 [node name="GameManager" parent="." instance=ExtResource("2_q4mk4")]
 
 [node name="GameCamera" parent="." instance=ExtResource("4_t7rqv")]
+position = Vector2(256, 168)
 
 [node name="DeliverLabel" type="Label" parent="."]
 offset_left = 440.0
@@ -79,6 +80,7 @@ extents = Vector2(200, 1)
 scene = ExtResource("5_6qmi8")
 
 [node name="Spawner3" parent="." groups=["spawner_secondary"] instance=ExtResource("7_snuft")]
+visible = false
 position = Vector2(80, 176)
 extents = Vector2(300, 1)
 scene = ExtResource("6_upb8d")
