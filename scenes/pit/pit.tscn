@@ -1,6 +1,29 @@
-[gd_scene load_steps=3 format=3 uid="uid://e061nuhcd5c2"]
+[gd_scene load_steps=8 format=3 uid="uid://e061nuhcd5c2"]
 
 [ext_resource type="Script" path="res://scenes/pit/pit.gd" id="1_okbtb"]
+[ext_resource type="Shader" path="res://scenes/pit/pit.gdshader" id="2_epvdl"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_snm05"]
+noise_type = 3
+frequency = 0.005
+fractal_type = 0
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_pbshs"]
+width = 1024
+height = 1024
+seamless = true
+noise = SubResource("FastNoiseLite_snm05")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_d26jw"]
+shader = ExtResource("2_epvdl")
+shader_parameter/color_one = Color(1, 0.74902, 0.25098, 1)
+shader_parameter/color_two = Color(0.8, 0.0784314, 0.141176, 1)
+shader_parameter/color_three = Color(0.901961, 0.313726, 0.313726, 1)
+shader_parameter/color_four = Color(1, 0.976471, 0.701961, 1)
+shader_parameter/noise_texture = SubResource("NoiseTexture2D_pbshs")
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_dbrjg"]
+size = Vector2(160, 160)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_m7qd3"]
 size = Vector2(160, 160)
@@ -8,7 +31,13 @@ size = Vector2(160, 160)
 [node name="Pit" type="Node2D"]
 script = ExtResource("1_okbtb")
 
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_repeat = 2
+material = SubResource("ShaderMaterial_d26jw")
+texture = SubResource("PlaceholderTexture2D_dbrjg")
+
 [node name="Area2D" type="Area2D" parent="."]
+visible = false
 collision_layer = 4
 collision_mask = 16
 
