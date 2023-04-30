@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scenes/demon/demon.gd" id="1_ujgr6"]
 [ext_resource type="PackedScene" uid="uid://cvgc3ypo1apv" path="res://scenes/effect/punch_particles.tscn" id="2_7i6r4"]
-[ext_resource type="PackedScene" uid="uid://c0slylsf6jlls" path="res://scenes/projectile/projectile.tscn" id="2_qg8t3"]
+[ext_resource type="PackedScene" uid="uid://dm8wtwhqb7xc8" path="res://scenes/spikes/spikes.tscn" id="4_kue4u"]
 [ext_resource type="Texture2D" uid="uid://cxby20iyoo3av" path="res://assets/demon/head.png" id="5_ke6ym"]
 [ext_resource type="Texture2D" uid="uid://d4ax0w5gnxg7y" path="res://assets/demon/body.png" id="5_rwkhq"]
 [ext_resource type="Texture2D" uid="uid://13a57agf6tn4" path="res://assets/demon/arm_left.png" id="7_lv6ji"]
@@ -435,7 +435,7 @@ libraries = {
 }
 
 [node name="ResourcePreloader" type="ResourcePreloader" parent="."]
-resources = [PackedStringArray("projectile", "punch_particles"), [ExtResource("2_qg8t3"), ExtResource("2_7i6r4")]]
+resources = [PackedStringArray("punch_particles", "spikes"), [ExtResource("2_7i6r4"), ExtResource("4_kue4u")]]
 
 [node name="StateTimer" type="Timer" parent="."]
 one_shot = true

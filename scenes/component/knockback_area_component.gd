@@ -1,7 +1,7 @@
 extends Area2D
 class_name KnockbackAreaComponent
 
-@export var knockback_force = 400.0
+@export var knockback_force = 450.0
 
 
 #func _ready():

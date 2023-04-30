@@ -119,7 +119,6 @@ texture = ExtResource("1_pnwfg")
 3:3/0/terrains_peering_bit/left_side = 0
 3:3/0/terrains_peering_bit/top_left_corner = 0
 3:3/0/terrains_peering_bit/top_side = 0
-3:3/0/terrains_peering_bit/top_right_corner = 0
 5:3/0 = 0
 5:3/0/terrain_set = 0
 5:3/0/terrain = 0

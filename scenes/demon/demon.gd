@@ -15,7 +15,7 @@ const WALK_SPEED = 50
 @onready var projectile_marker = $ProjectileMarker
 @onready var knockout_hitbox_shape = $KnockoutHitboxArea/CollisionShape2D
 @onready var knockout_hurtbox_area = $KnockoutHurtboxArea
-@onready var projectile_scene = resource_preloader.get_resource("projectile") as PackedScene
+@onready var spikes_scene = resource_preloader.get_resource("spikes") as PackedScene
 @onready var animation_player = $AnimationPlayer
 
 var state_machine: CallableStateMachine = CallableStateMachine.new()
@@ -144,7 +144,7 @@ func is_over_edge():
 
 
 func try_spawn_projectile():
-	if randf() > .25:
+	if randf() > .3:
 		return
 	
 	var player = get_tree().get_first_node_in_group("player")
@@ -152,11 +152,10 @@ func try_spawn_projectile():
 	if player != null:
 		direction = Vector2.RIGHT if player.global_position.x > global_position.x else Vector2.LEFT
 	
-	var projectile = projectile_scene.instantiate() as Node2D
-	add_sibling(projectile)
-	projectile.global_position = projectile_marker.global_position
-	projectile.start(direction)
-
+	var spikes = spikes_scene.instantiate() as Node2D
+	get_parent().get_parent().add_child(spikes)
+	spikes.global_position = global_position
+	
 
 func update_facing():
 	visuals.scale = Vector2(-1, 1) if velocity.x < 0 else Vector2.ONE

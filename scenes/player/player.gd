@@ -29,7 +29,7 @@ var fist_instance: Node2D = null
 func _ready():
 	state_machine.add_states(state_normal)
 	state_machine.add_states(state_airborne, enter_state_airborne, leave_state_airborne)
-	state_machine.add_states(state_knockback)
+	state_machine.add_states(state_knockback, enter_state_knockback)
 	state_machine.add_states(state_resurrect, enter_state_resurrect, leave_state_resurrect)
 	state_machine.set_initial_state(state_normal)
 	
@@ -127,6 +127,10 @@ func leave_state_airborne():
 		fist_instance.cleanup()
 
 
+func enter_state_knockback():
+	animation_player.play("jump")
+
+
 func state_knockback():
 	velocity.y += GRAVITY * get_process_delta_time()
 	move_and_slide()
@@ -186,10 +190,12 @@ func on_punch_timer_timeout():
 
 
 func on_hurtbox_area_entered(other_area: Area2D):
+	var middle = get_tree().get_first_node_in_group("resurrect_marker_apex") as Node2D
+	
 	if other_area is KnockbackAreaComponent:
 		var area = other_area as KnockbackAreaComponent
 		
-		var xsign = sign(global_position.x - other_area.global_position.x)
+		var xsign = sign(middle.global_position.x - global_position.x)
 		var direction = Vector2.UP.rotated(deg_to_rad(25 * xsign))
 		velocity = direction * area.knockback_force
 		state_machine.change_state(state_knockback)

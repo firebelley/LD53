@@ -1,0 +1,134 @@
+[gd_scene load_steps=8 format=3 uid="uid://dm8wtwhqb7xc8"]
+
+[ext_resource type="Texture2D" uid="uid://cv3tl657fvhim" path="res://assets/spikes/spikes.png" id="1_cvnh3"]
+[ext_resource type="Texture2D" uid="uid://bvelu3aees5h7" path="res://assets/spikes/indicator.png" id="2_dau0q"]
+[ext_resource type="PackedScene" uid="uid://bd0qyw8fumqhp" path="res://scenes/component/knockback_area_component.tscn" id="3_3x57p"]
+
+[sub_resource type="Animation" id="Animation_ua7nf"]
+resource_name = "default"
+length = 1.5
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Indicator:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.15, 0.25, 0.35, 0.45, 0.55, 0.65, 0.75, 0.85, 0.9),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(1.25, 1.25), Vector2(0.9, 0.9), Vector2(1, 1), Vector2(0.9, 0.9), Vector2(1, 1), Vector2(0.9, 0.9), Vector2(1, 1), Vector2(0.9, 0.9), Vector2(1, 1), Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.85, 0.9, 1, 1.5),
+"transitions": PackedFloat32Array(1, 1, 1, 5.85634, 1),
+"update": 0,
+"values": [Vector2(1, 0), Vector2(1, 1e-05), Vector2(1, 1.33), Vector2(1, 1), Vector2(1, 0)]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(1.5),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"queue_free"
+}]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("KnockbackAreaComponent/CollisionShape2D:disabled")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.9, 1.25),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+
+[sub_resource type="Animation" id="Animation_afoar"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Indicator:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("KnockbackAreaComponent/CollisionShape2D:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_u30hd"]
+_data = {
+"RESET": SubResource("Animation_afoar"),
+"default": SubResource("Animation_ua7nf")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cqifv"]
+size = Vector2(32, 8)
+
+[node name="Spikes" type="Node2D"]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "default"
+libraries = {
+"": SubResource("AnimationLibrary_u30hd")
+}
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_cvnh3")
+centered = false
+offset = Vector2(-16, -7)
+
+[node name="Indicator" type="Sprite2D" parent="."]
+position = Vector2(0, 13)
+texture = ExtResource("2_dau0q")
+centered = false
+offset = Vector2(-15, -4)
+
+[node name="KnockbackAreaComponent" parent="." instance=ExtResource("3_3x57p")]
+position = Vector2(0, -3)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="KnockbackAreaComponent"]
+shape = SubResource("RectangleShape2D_cqifv")
+disabled = true
