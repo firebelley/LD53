@@ -99,6 +99,7 @@ func enter_state_knockout():
 func state_knockout():
 	var delta = get_process_delta_time()
 	velocity.x = lerp(velocity.x, 0.0, 1.0 - exp(-3.0 * delta))
+	velocity.y += GRAVITY * delta
 	move_and_slide()
 	
 	if !is_on_floor():

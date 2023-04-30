@@ -2,9 +2,5 @@
 
 [ext_resource type="Script" path="res://scenes/spawner/spawner.gd" id="1_tlfyi"]
 
-[node name="Spawner" type="Node2D"]
+[node name="Spawner" type="Node2D" groups=["spawner"]]
 script = ExtResource("1_tlfyi")
-
-[node name="Timer" type="Timer" parent="."]
-wait_time = 2.0
-autostart = true

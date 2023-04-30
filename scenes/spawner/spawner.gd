@@ -1,5 +1,6 @@
 @tool
 extends Node2D
+class_name Spawner
 
 @export var extents: Vector2 = Vector2(16, 1)
 @export var scene: PackedScene
@@ -7,7 +8,6 @@ extends Node2D
 
 func _ready():
 	set_physics_process(Engine.is_editor_hint())
-	$Timer.timeout.connect(on_timer_timeout)
 
 
 func _physics_process(delta):
@@ -35,7 +35,4 @@ func get_random_spawn_point():
 	var position = global_position
 	position.x += randf_range(0, get_rect().size.x)
 	return position 
-	
 
-func on_timer_timeout():
-	spawn()

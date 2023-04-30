@@ -7,3 +7,6 @@ script = ExtResource("1_0x0p1")
 
 [node name="TickTimer" type="Timer" parent="."]
 one_shot = true
+
+[node name="SpawnTimer" type="Timer" parent="."]
+autostart = true
