@@ -58,7 +58,6 @@ func on_enemy_banished(enemy: Node2D, points: int):
 	current_enemies -= 1
 	current_player_xp += points
 	check_level_up()
-	print(current_enemies)
 	if current_player_level >= TARGET_LEVEL:
 		spawn_timer.stop()
 		if current_enemies <= 0:

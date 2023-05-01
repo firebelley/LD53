@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://bbp1bki3tgpvf"]
+[gd_scene load_steps=20 format=3 uid="uid://bbp1bki3tgpvf"]
 
 [ext_resource type="Script" path="res://scenes/demon/demon.gd" id="1_ujgr6"]
 [ext_resource type="PackedScene" uid="uid://cvgc3ypo1apv" path="res://scenes/effect/punch_particles.tscn" id="2_7i6r4"]
@@ -9,6 +9,44 @@
 [ext_resource type="Texture2D" uid="uid://bi7nsougcw3x2" path="res://assets/demon/arm_right.png" id="8_o3lns"]
 [ext_resource type="Texture2D" uid="uid://bkcdwc2ctfl6r" path="res://assets/demon/foot_right.png" id="9_cm1ep"]
 [ext_resource type="Texture2D" uid="uid://bjloc63xifon4" path="res://assets/demon/foot_left.png" id="9_oxu8c"]
+
+[sub_resource type="Animation" id="Animation_tkv6j"]
+resource_name = "default"
+length = 0.3
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Visuals:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 24), Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_d0hpc"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Visuals:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_0s7bd"]
+_data = {
+"RESET": SubResource("Animation_d0hpc"),
+"default": SubResource("Animation_tkv6j")
+}
 
 [sub_resource type="Animation" id="Animation_j5ony"]
 length = 0.001
@@ -427,6 +465,12 @@ size = Vector2(10, 16)
 [node name="Demon" type="CharacterBody2D"]
 collision_layer = 16
 script = ExtResource("1_ujgr6")
+
+[node name="SpawnAnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "default"
+libraries = {
+"": SubResource("AnimationLibrary_0s7bd")
+}
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 autoplay = "run"

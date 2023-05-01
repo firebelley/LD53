@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://cb4hjudh2413q"]
+[gd_scene load_steps=18 format=3 uid="uid://cb4hjudh2413q"]
 
 [ext_resource type="Script" path="res://scenes/piggy/piggy.gd" id="1_ydybj"]
 [ext_resource type="PackedScene" uid="uid://c0slylsf6jlls" path="res://scenes/projectile/projectile.tscn" id="2_whbrf"]
@@ -8,12 +8,50 @@
 [ext_resource type="Texture2D" uid="uid://cxt674a0sc1ik" path="res://assets/piggy/basket.png" id="6_5nfys"]
 [ext_resource type="Texture2D" uid="uid://bhahpwt5rxm75" path="res://assets/piggy/balloon.png" id="7_rt0om"]
 
+[sub_resource type="Animation" id="Animation_2w2b5"]
+resource_name = "default"
+length = 0.3
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Visuals/VisualsRoot:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.15, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(1.25, 1.25), Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_eghw4"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Visuals/VisualsRoot:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_jqvow"]
+_data = {
+"RESET": SubResource("Animation_eghw4"),
+"default": SubResource("Animation_2w2b5")
+}
+
 [sub_resource type="Animation" id="Animation_ribsf"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Visuals/Head:position")
+tracks/0/path = NodePath("Visuals/VisualsRoot/Head:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -25,7 +63,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Visuals/Balloon:rotation")
+tracks/1/path = NodePath("Visuals/VisualsRoot/Balloon:rotation")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -37,7 +75,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("Visuals/Basket:rotation")
+tracks/2/path = NodePath("Visuals/VisualsRoot/Basket:rotation")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -49,7 +87,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("Visuals/Balloon:position")
+tracks/3/path = NodePath("Visuals/VisualsRoot/Balloon:position")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -61,7 +99,7 @@ tracks/3/keys = {
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("Visuals/Balloon:scale")
+tracks/4/path = NodePath("Visuals/VisualsRoot/Balloon:scale")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
@@ -73,7 +111,7 @@ tracks/4/keys = {
 tracks/5/type = "value"
 tracks/5/imported = false
 tracks/5/enabled = true
-tracks/5/path = NodePath("Visuals/Balloon:visible")
+tracks/5/path = NodePath("Visuals/VisualsRoot/Balloon:visible")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
@@ -85,7 +123,7 @@ tracks/5/keys = {
 tracks/6/type = "value"
 tracks/6/imported = false
 tracks/6/enabled = true
-tracks/6/path = NodePath("Visuals/Basket:position")
+tracks/6/path = NodePath("Visuals/VisualsRoot/Basket:position")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/keys = {
@@ -103,7 +141,7 @@ step = 0.05
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Visuals/Balloon:position")
+tracks/0/path = NodePath("Visuals/VisualsRoot/Balloon:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -115,7 +153,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Visuals/Balloon:scale")
+tracks/1/path = NodePath("Visuals/VisualsRoot/Balloon:scale")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -127,7 +165,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("Visuals/Balloon:visible")
+tracks/2/path = NodePath("Visuals/VisualsRoot/Balloon:visible")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -139,7 +177,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("Visuals/Head:position")
+tracks/3/path = NodePath("Visuals/VisualsRoot/Head:position")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -151,7 +189,7 @@ tracks/3/keys = {
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("Visuals/Basket:position")
+tracks/4/path = NodePath("Visuals/VisualsRoot/Basket:position")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
@@ -169,7 +207,7 @@ step = 0.05
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Visuals/Head:position")
+tracks/0/path = NodePath("Visuals/VisualsRoot/Head:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -181,7 +219,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Visuals/Balloon:rotation")
+tracks/1/path = NodePath("Visuals/VisualsRoot/Balloon:rotation")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -193,7 +231,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("Visuals/Basket:rotation")
+tracks/2/path = NodePath("Visuals/VisualsRoot/Basket:rotation")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -223,6 +261,12 @@ size = Vector2(14, 22)
 collision_layer = 16
 script = ExtResource("1_ydybj")
 
+[node name="SpawnAnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "default"
+libraries = {
+"": SubResource("AnimationLibrary_jqvow")
+}
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 autoplay = "run"
 libraries = {
@@ -237,19 +281,21 @@ resources = [PackedStringArray("piggy_attack", "projectile", "punch_particles"),
 
 [node name="Visuals" type="Node2D" parent="."]
 
-[node name="Balloon" type="Sprite2D" parent="Visuals"]
+[node name="VisualsRoot" type="Node2D" parent="Visuals"]
+
+[node name="Balloon" type="Sprite2D" parent="Visuals/VisualsRoot"]
 position = Vector2(-1, -26)
 texture = ExtResource("7_rt0om")
 centered = false
 offset = Vector2(-12, -36)
 
-[node name="Basket" type="Sprite2D" parent="Visuals"]
+[node name="Basket" type="Sprite2D" parent="Visuals/VisualsRoot"]
 position = Vector2(0, -10)
 texture = ExtResource("6_5nfys")
 centered = false
 offset = Vector2(-10, -14)
 
-[node name="Head" type="Sprite2D" parent="Visuals"]
+[node name="Head" type="Sprite2D" parent="Visuals/VisualsRoot"]
 position = Vector2(0, -16)
 texture = ExtResource("5_0eti8")
 centered = false

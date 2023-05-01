@@ -81,7 +81,7 @@ scene = ExtResource("5_6qmi8")
 
 [node name="Spawner3" parent="." groups=["spawner_secondary"] instance=ExtResource("7_snuft")]
 visible = false
-position = Vector2(80, 176)
+position = Vector2(72, 72)
 extents = Vector2(300, 1)
 scene = ExtResource("6_upb8d")
 
