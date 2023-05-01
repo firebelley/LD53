@@ -20,6 +20,7 @@ const JUMP_TERMINATION_MOD = 4.0
 @onready var pit_area = $PitArea
 @onready var jump_stream_player = $JumpStreamPlayer
 @onready var wings = %Wings
+@onready var coyote_timer = $CoyoteTimer
 
 var held_enemy: Node2D
 var current_hp = 3
@@ -50,6 +51,7 @@ func state_normal():
 	var movement_vector = get_movement_vector()
 	velocity.x = lerp(velocity.x, movement_vector.x * MAX_SPEED, 1.0 - exp(ACCEL_SMOOTH * delta))
 	did_uppercut = Input.is_action_just_pressed("punch_alternate")
+	var did_jump = false
 	
 	if movement_vector.y < 0 || did_uppercut:
 		if did_uppercut:
@@ -58,6 +60,7 @@ func state_normal():
 		else:
 			velocity.y -= JUMP_FORCE
 		jump_stream_player.play_random()
+		did_jump = true
 	
 	move_and_slide()
 	
@@ -71,6 +74,9 @@ func state_normal():
 
 	if (!is_on_floor()):
 		state_machine.change_state(state_airborne)
+		if !did_jump:
+			coyote_timer.start()
+		
 
 
 func enter_state_airborne():
@@ -85,7 +91,11 @@ func state_airborne():
 	
 	var is_jump_held = Input.is_action_pressed("jump") || did_uppercut
 	
-	if velocity.y < 0 && is_jump_held:
+	if Input.is_action_just_pressed("jump") && !coyote_timer.is_stopped():
+		velocity.y = -JUMP_FORCE
+		jump_stream_player.play_random()
+		coyote_timer.stop()
+	elif velocity.y < 0 && is_jump_held:
 		var adjusted_gravity = GRAVITY * JUMP_UP_GRAVITY_MOD
 		velocity.y += adjusted_gravity * delta
 	elif velocity.y < 0 && !is_jump_held:

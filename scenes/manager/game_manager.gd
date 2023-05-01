@@ -11,7 +11,7 @@ const TARGET_LEVEL = 10
 
 var current_ticks = 0
 var required_player_xp = 5
-var required_xp_growth = 5
+var required_xp_growth = 3
 var current_player_xp = 0
 var current_player_level = 0
 var spawners = []

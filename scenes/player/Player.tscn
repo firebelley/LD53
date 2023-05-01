@@ -412,6 +412,10 @@ script = ExtResource("1_c660e")
 [node name="ResourcePreloader" type="ResourcePreloader" parent="."]
 resources = [PackedStringArray("fist"), [ExtResource("2_xsxkl")]]
 
+[node name="CoyoteTimer" type="Timer" parent="."]
+wait_time = 0.2
+one_shot = true
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 autoplay = "run"
 libraries = {
