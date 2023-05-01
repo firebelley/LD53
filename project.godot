@@ -10,13 +10,13 @@ config_version=5
 
 [application]
 
-config/name="Banishment"
+config/name="Banish Pit"
 run/main_scene="res://scenes/Main.tscn"
 config/use_custom_user_dir=true
 config/custom_user_dir_name="LD53"
 config/features=PackedStringArray("4.0")
 run/max_fps=240
-boot_splash/bg_color=Color(0.0901961, 0.0431373, 0.101961, 1)
+boot_splash/bg_color=Color(0.0392157, 0.00392157, 0.0509804, 1)
 boot_splash/image="res://icon.png"
 boot_splash/fullsize=false
 boot_splash/use_filter=false
@@ -40,7 +40,7 @@ window/size/mode=3
 window/size/window_width_override=1280
 window/size/window_height_override=720
 window/stretch/mode="viewport"
-window/size/mode.debug=0
+window/size/mode.debug=4
 
 [dotnet]
 
