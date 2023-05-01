@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://cb4hjudh2413q"]
+[gd_scene load_steps=19 format=3 uid="uid://cb4hjudh2413q"]
 
 [ext_resource type="Script" path="res://scenes/piggy/piggy.gd" id="1_ydybj"]
 [ext_resource type="PackedScene" uid="uid://c0slylsf6jlls" path="res://scenes/projectile/projectile.tscn" id="2_whbrf"]
@@ -241,10 +241,53 @@ tracks/2/keys = {
 "values": [0.0, -0.0872665, 0.0872665]
 }
 
+[sub_resource type="Animation" id="Animation_rwhl4"]
+resource_name = "knockout"
+length = 0.4
+loop_mode = 1
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Visuals/VisualsRoot/Balloon:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.15),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(-1, -26), Vector2(-1, -48)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Visuals/VisualsRoot/Balloon:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.15),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(0.5, 1.5), Vector2(0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Visuals/VisualsRoot/Balloon:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.15),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_stvts"]
 _data = {
 "RESET": SubResource("Animation_ribsf"),
 "airborne": SubResource("Animation_na2ey"),
+"knockout": SubResource("Animation_rwhl4"),
 "run": SubResource("Animation_3j4id")
 }
 

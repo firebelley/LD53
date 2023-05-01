@@ -103,7 +103,7 @@ offset_top = 208.0
 offset_right = 205.0
 offset_bottom = 221.0
 rotation = -0.0400315
-text = "WASD to move"
+text = "WD to move"
 uppercase = true
 
 [node name="Label2" type="Label" parent="Tutorial"]
@@ -111,7 +111,7 @@ offset_left = 416.0
 offset_top = 200.0
 offset_right = 484.0
 offset_bottom = 226.0
-rotation = 0.0544354
+rotation = -0.0213823
 text = "RIGHT MOUSE
 UPPERCUT"
 horizontal_alignment = 1
@@ -134,7 +134,6 @@ offset_left = 400.0
 offset_top = 240.0
 offset_right = 492.0
 offset_bottom = 266.0
-rotation = -0.0336608
 text = "hold left mouse
 in air to
 charge punch"

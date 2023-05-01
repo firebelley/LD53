@@ -109,7 +109,7 @@ func state_airborne():
 
 
 func enter_state_knockout():
-#	animation_player.play("RESET")
+	animation_player.play("knockout")
 	visuals.rotation = deg_to_rad(-90)
 	visuals.position = Vector2.UP * 4
 	state_timer.wait_time = 5
