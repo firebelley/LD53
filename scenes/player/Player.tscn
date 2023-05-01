@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://dg7m2ur78tcya"]
+[gd_scene load_steps=21 format=3 uid="uid://dg7m2ur78tcya"]
 
 [ext_resource type="Script" path="res://scenes/player/player.gd" id="1_c660e"]
 [ext_resource type="PackedScene" uid="uid://bubbwkd2okp1y" path="res://scenes/fist/fist.tscn" id="2_xsxkl"]
@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://bk2chvfio474m" path="res://assets/player/wings.png" id="8_qv6dd"]
 [ext_resource type="Script" path="res://addons/node_library/scripts/random_audio_stream_player.gd" id="8_vp7nq"]
 [ext_resource type="AudioStream" uid="uid://cs4bfkhtgo601" path="res://assets/audio/jump3.wav" id="9_oiulu"]
+[ext_resource type="AudioStream" uid="uid://3abvl3vsp75t" path="res://assets/audio/player_hurt.wav" id="11_q6dgj"]
 
 [sub_resource type="Animation" id="Animation_crryq"]
 length = 0.001
@@ -524,4 +525,11 @@ volume_db = -12.0
 bus = &"sfx"
 script = ExtResource("8_vp7nq")
 streams = Array[AudioStream]([ExtResource("9_oiulu")])
+randomize_pitch = true
+
+[node name="HurtStreamPlayer" type="AudioStreamPlayer" parent="."]
+volume_db = -12.0
+bus = &"sfx"
+script = ExtResource("8_vp7nq")
+streams = Array[AudioStream]([ExtResource("11_q6dgj")])
 randomize_pitch = true

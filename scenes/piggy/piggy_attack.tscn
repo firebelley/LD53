@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://di3pyqp2856w4"]
+[gd_scene load_steps=18 format=3 uid="uid://di3pyqp2856w4"]
 
 [ext_resource type="Script" path="res://scenes/piggy/piggy_attack.gd" id="1_1oxqt"]
 [ext_resource type="Shader" path="res://scenes/piggy/piggy.gdshader" id="1_l1kvq"]
@@ -6,6 +6,59 @@
 [ext_resource type="PackedScene" uid="uid://bd0qyw8fumqhp" path="res://scenes/component/knockback_area_component.tscn" id="4_5hacm"]
 [ext_resource type="Material" uid="uid://c5v22sx37ex03" path="res://resources/animated_particles_canvas_material.tres" id="5_x3h7o"]
 [ext_resource type="Texture2D" uid="uid://ctu4h86cwjcg6" path="res://assets/effect/particles.png" id="6_qrh6l"]
+[ext_resource type="Script" path="res://addons/node_library/scripts/random_audio_stream_player_2d.gd" id="7_33kk4"]
+[ext_resource type="AudioStream" uid="uid://blt7y7355p24x" path="res://assets/audio/laser.wav" id="8_dac5n"]
+
+[sub_resource type="Animation" id="Animation_cxv8o"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Line2D:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("KnockbackAreaComponent/CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("EndParticles:emitting")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("StartParticles:emitting")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
 
 [sub_resource type="Animation" id="Animation_6745i"]
 resource_name = "default"
@@ -72,56 +125,19 @@ tracks/4/keys = {
 "update": 1,
 "values": [true]
 }
-
-[sub_resource type="Animation" id="Animation_cxv8o"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Line2D:scale")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
+tracks/5/type = "method"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("RandomAudioStreamPlayer2D")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(1, 1)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("KnockbackAreaComponent/CollisionShape2D:disabled")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("EndParticles:emitting")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("StartParticles:emitting")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
+"values": [{
+"args": [],
+"method": &"play_random"
+}]
 }
 
 [sub_resource type="Animation" id="Animation_yus7h"]
@@ -271,3 +287,10 @@ texture = ExtResource("6_qrh6l")
 lifetime = 0.2
 fixed_fps = 0
 interpolate = false
+
+[node name="RandomAudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+max_distance = 400.0
+bus = &"sfx"
+script = ExtResource("7_33kk4")
+streams = Array[AudioStream]([ExtResource("8_dac5n")])
+randomize_pitch = true

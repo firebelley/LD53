@@ -170,18 +170,19 @@ func enter_state_resurrect():
 		tween.tween_callback(func(): state_machine.change_state(state_normal))
 		tween.tween_property(wings, "scale", Vector2.ZERO, .5).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK)
 		tween.tween_property(wings, "visible", false, 0.0)
-	else:
+	elif current_hp == 0:
 		GameEvents.emit_game_over()
-		visible = false
-	
+		queue_free()
 	
 
 func state_resurrect():
-	pass
+	velocity = Vector2.ZERO
+	move_and_slide()
 
 
 func leave_state_resurrect():
-	pass
+	velocity = Vector2.ZERO
+	move_and_slide()
 
 
 func get_movement_vector():
@@ -229,3 +230,4 @@ func on_hurtbox_area_entered(other_area: Area2D):
 
 func on_pit_area_entered(_other_area: Area2D):
 	state_machine.change_state(state_resurrect)
+	$HurtStreamPlayer.play_random()
